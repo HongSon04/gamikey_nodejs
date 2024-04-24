@@ -2,7 +2,7 @@
   "name": "gamikey-nodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "dev": "nodemon index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,18 +11,18 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.18.0",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.2",
-    "mongoose-slug-updater": "^3.3.0"
+    "mongoose-slug-updater": "^3.3.0",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.12.7",
-    "nodemon": "^3.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "nodemon": "^3.1.0"
   }
 }
