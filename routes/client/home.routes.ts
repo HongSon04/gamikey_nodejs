@@ -1,24 +1,16 @@
 import express, { Router } from 'express';
-
+import HomeController from '../../controller/client/home.controller';
 const homeRouter: Router = express.Router();
 
 // ? [GET] /
-homeRouter.get('/', (req, res) => {
-    res.render('client/pages/home/home.ejs')
-});
+homeRouter.get('/', HomeController.index);
 // ? [GET] /home
-homeRouter.get('/home', (req, res) => {
-    res.render('client/pages/home/home.ejs')
-});
+homeRouter.get('/home', HomeController.index);
 
 // ? [GET] /login
-homeRouter.get('/login', (req, res) => {
-    res.render('client/pages/login.ejs')
-});
+homeRouter.get('/login', HomeController.login);
 
 // ? [GET] /register
-homeRouter.get('/register', (req, res) => {
-    res.render('client/pages/register.ejs')
-});
+homeRouter.get('/register', HomeController.register);
 
 export default homeRouter;
