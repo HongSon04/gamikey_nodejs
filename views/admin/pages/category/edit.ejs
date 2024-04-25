@@ -24,7 +24,7 @@
                         <div class="col-12">
                             <!-- Product Information -->
                             <div class="card mb-4">
-                                <form action="/admin/category/update/<%=category.id%>" method="POST">
+                                <form action="/admin/category/update/<%=category.id%>?_method=PATCH" method="POST">
                                     <div class="card-header">
                                         <h5 class="card-tile mb-0">Chỉnh Sửa Danh Mục: <%= category.name %>
                                         </h5>
@@ -56,7 +56,7 @@
                                                 <button type="submit"
                                                     class="btn btn-primary waves-effect waves-light"><i
                                                         class="fa-solid fa-floppy-disk"></i>&ensp;
-                                                    Thêm</button>
+                                                    Cập Nhật</button>
                                             </div>
                                         </div>
                                     </div>
@@ -71,20 +71,12 @@
     <script>
         $(document).ready(function () {
             let errors = "<%= listErrors %>"
-            let success = "<%= success %>"
             if (errors != "") {
                 errors = errors.split(',');
                 errors.forEach(error => {
                     toastr.error(error);
                 });
             }
-            if (success != "") {
-                toastr.success(success);
-            }
-            // toastr.options.closeDuration = 30000000;
-            // toastr.options.timeOut = 30000000;
-            // toastr.options.extendedTimeOut = 30000000;
-            // toastr.error('Please fill in all the fields');
         })
     </script>
     <%- include('../../partials/footer.ejs') %>

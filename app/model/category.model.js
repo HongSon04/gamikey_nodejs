@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-updater');
+require('dotenv').config();
 
 mongoose.plugin(slug);
 
@@ -25,6 +26,14 @@ const CategorySchema = new mongoose.Schema(
     meta_description: {
       type: String,
       slug: 'description',
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+    expiredAt: {
+      type: Date,
+      default: null,
     },
   },
   { timestamps: true },

@@ -6,6 +6,7 @@ const path = require('path');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const methodOverride = require('method-override');
 const ejs = require('ejs');
 const checkConnect = require('./config/database');
 const adminRouter = require('./routes/admin/admin.routes');
@@ -23,6 +24,8 @@ app.use(cookieParser('keyboard cat'));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
+// ? MEthod Override
+app.use(methodOverride('_method'));
 // ? Set Template Engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
