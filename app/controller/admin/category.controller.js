@@ -22,10 +22,7 @@ const create = (req, res) => {
 
 const store = async (req, res) => {
   const { name, status } = req.body;
-  const category = new Category({
-    name,
-    status,
-  });
+  
   await category.save();
   req.flash('success', 'Thêm Danh Mục Thành Công');
 
