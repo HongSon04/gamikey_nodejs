@@ -1,7 +1,11 @@
 const Category = require('../../model/category.model');
+const {
+  getAllCategories,
+  getCategoryById,
+} = require('../../services/category.services');
 
 const index = async (req, res) => {
-  const categories = await Category.find();
+  const categories = await getAllCategories();
   console.log(categories);
   res.render('admin/pages/category/index.ejs', { categories });
 };
@@ -38,8 +42,26 @@ const store = async (req, res) => {
   }
 };
 
+const edit = async (req, res) => {
+  const id = req.params.id;
+  const category = await getCategoryById(id);
+  res.render('admin/pages/category/edit.ejs', {
+    category,
+    success: req.flash('success'),
+    errors: req.flash('errors'),
+  });
+};
+
+const update = async (req, res) => {
+  const { name, status } = req.body;
+  const { id } = req.params;
+  console.log(id, name, status);
+  res.send(id + name + status);
+}
+
 module.exports = {
   index,
   create,
   store,
+  edit,update
 };
