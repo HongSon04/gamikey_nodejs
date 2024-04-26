@@ -1,5 +1,9 @@
 const express = require('express');
 const brandRouter = express.Router();
+
+const multer = require('multer');
+
+const fileUpload = multer();
 const {
   index,
   create,
@@ -9,11 +13,12 @@ const {
   deleteSubCategory,
   changeStatus,
 } = require('../../app/controller/admin/brand.controller');
+const { uploadCloud } = require('../../app/helper/cloudImage');
 
 brandRouter.get('/', index);
 brandRouter.get('/create', create);
 brandRouter.get('/edit/:id', edit);
-brandRouter.post('/store', store);
+brandRouter.post('/store', fileUpload.single('image'), uploadCloud, store);
 brandRouter.patch('/update/:id', update);
 brandRouter.delete('/delete/:id', deleteSubCategory);
 brandRouter.patch('/change-status/:id', changeStatus);

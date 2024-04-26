@@ -3,57 +3,57 @@
 
   <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="py-3 mb-0">
-      <span class="text-muted fw-light">Ecommerce /</span><span class="fw-medium"> Danh Mục Phụ</span>
+      <span class="text-muted fw-light">Ecommerce /</span><span class="fw-medium"> Thương Hiệu</span>
     </h4>
 
     <div class="app-ecommerce">
       <!-- Add Product -->
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
         <div class="d-flex flex-column justify-content-center">
-          <h4 class="mb-1 mt-3">Danh Mục Phụ</h4>
+          <h4 class="mb-1 mt-3">Thương Hiệu</h4>
         </div>
         <div class="d-flex align-content-center flex-wrap gap-3">
-          <a href="/admin/sub-category/create" class="btn btn-primary">Thêm Danh Mục Phụ</a>
+          <a href="/admin/brand/create" class="btn btn-primary">Thêm Thương Hiệu</a>
         </div>
       </div>
 
       <div class="row">
         <!-- Ajax Sourced Server-side -->
         <div class="card">
-          <h5 class="card-header">Bảng Danh Mục Phụ</h5>
+          <h5 class="card-header">Bảng Thương Hiệu</h5>
           <div class="card-datatable text-nowrap">
             <table class="datatables-ajax table">
               <thead>
                 <tr>
                   <th>STT</th>
                   <th>ID</th>
-                  <th>Tên Danh Mục</th>
-                  <th>Tên Danh Mục Phụ</th>
+                  <th>Hình Ảnh</th>
+                  <th>Tên Thương Hiệu</th>
                   <th>Trạng Thái</th>
                   <th>Hành Động</th>
                 </tr>
               </thead>
               <tbody>
-                <% if(SubCategories.length> 0) { %> <% SubCategories.forEach((subCategory,index)=> { %>
+                <% if(Brands.length> 0) { %> <% Brands.forEach((Brands,index)=> { %>
                   <!-- get name category -->
                     <tr>
                       <td>
                         <%= index + 1 %>
                       </td>
                       <td>
-                        <%= subCategory.id %>
+                        <%= Brands.id %>
                       </td>
                       <td>
-                        <%= subCategory.category_id.name %>
+                        <img src="<%= Brands.image %>" style="width: 150px;height: 100px;" alt="">
                       </td>
                       <td>
-                        <%= subCategory.name %>
+                        <%= Brands.name %>
                       </td>
                       <td>
-                        <% if(subCategory.status==1) { %>
+                        <% if(Brands.status==1) { %>
                           <label class="switch">
                             <input type="checkbox" checked class="switch-input change-status"
-                              data-id="<%= subCategory.id%>" style="width: 100%; height: 100%;" />
+                              data-id="<%= Brands.id%>" style="width: 100%; height: 100%;" />
                             <span class="switch-toggle-slider">
                               <span class="switch-on">
                                 <i class="ti ti-check"></i>
@@ -65,7 +65,7 @@
                           </label>
                           <% } else { %>
                             <label class="switch">
-                              <input type="checkbox" class="switch-input change-status" data-id="<%= subCategory.id%>"
+                              <input type="checkbox" class="switch-input change-status" data-id="<%= Brands.id%>"
                                 style="width: 100%; height: 100%;" />
                               <span class="switch-toggle-slider">
                                 <span class="switch-on">
@@ -80,10 +80,10 @@
                       </td>
                       <td class="d-flex">
                         <!-- EDIT BUTTON -->
-                        <a href="/admin/sub-category/edit/<%= subCategory.id%>"
+                        <a href="/admin/sub-category/edit/<%= Brands.id%>"
                           class="btn btn-warning waves-effect waves-light"><i class="fa-solid fa-pen-to-square"></i></a>
                         <!-- DELETE BUTTON -->
-                        <form action="/admin/sub-category/delete/<%= subCategory.id%>?_method=DELETE" method="post"
+                        <form action="/admin/sub-category/delete/<%= Brands.id%>?_method=DELETE" method="post"
                           class="delete-item-form mx-3">
                           <button class="btn btn-danger waves-effect waves-light delete-item"><i
                               class="fa-solid fa-trash-can"></i></button>

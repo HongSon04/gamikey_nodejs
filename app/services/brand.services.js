@@ -1,16 +1,16 @@
 const Brand = require('../model/brand.model');
 
-const getAllBrands = async (status = null) => {
-  return await Brand.find({ deletedAt: null, status: status });
+const getAllBrands = async () => {
+  return await Brand.find({ deletedAt: null });
 };
 
 const storeBrand = async (data) => {
-  const Brand = new Brand({
+  const brand = new Brand({
     name: data.name,
     status: data.status,
-    category_id: data.category_id,
+    image: data.image,
   });
-  return await Brand.save();
+  return await brand.save();
 };
 
 const getBrandById = async (id) => {
@@ -29,7 +29,6 @@ const updateBrand = async (id, data) => {
 };
 
 const deleteBrandByID = async (id) => {
-  console.log('Đã đi vào services');
   return await Brand.updateOne({ _id: id }, { deletedAt: Date.now() });
 };
 

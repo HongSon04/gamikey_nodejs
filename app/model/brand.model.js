@@ -18,7 +18,6 @@ const brandSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
     },
     deletedAt: {
       type: Date,

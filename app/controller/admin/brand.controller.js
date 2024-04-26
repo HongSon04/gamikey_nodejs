@@ -1,82 +1,75 @@
-const SubCategory = require('../../model/subCategory.model');
 const {
-  getAllCategories,
-  getAllSubCategories,
-  getSubCategoryById,
-  updateSubCategory,
-  deleteSubCategoryByID,
-  storeSubCategory,
-  changeStatusSubCategory,
-} = require('../../services/subCategory.services');
+  getAllBrands,
+  storeBrand,
+  updateBrand,
+  deleteBrandByID,
+  getBrandById,
+} = require('../../services/brand.services');
 
 const index = async (req, res) => {
   // ? Get name of category from category_id of subCategory
-  const SubCategories = await getAllSubCategories();
-  res.render('admin/pages/subCategory/index.ejs', {
-    SubCategories,
+  const Brands = await getAllBrands();
+  res.render('admin/pages/brand/index.ejs', {
+    Brands,
     success: req.flash('success'),
   });
 };
 
 const create = async (req, res) => {
-  const categories = await getAllCategories();
-  res.render('admin/pages/subCategory/create.ejs', {
+  res.render('admin/pages/brand/create.ejs', {
     errors: req.flash('errors'),
-    categories,
   });
 };
 
 const store = async (req, res) => {
-  const { name, category_id, status } = req.body;
+  const { name, status, image } = req.body;
   const data = {
     name,
     status,
-    category_id,
+    image,
   };
-  await storeSubCategory(data);
+  await storeBrand(data);
   req.flash('success', 'Thêm Danh Mục Phụ Thành Công');
 
-  res.redirect('/admin/sub-category');
+  res.redirect('/admin/brand');
 };
 
 const edit = async (req, res) => {
   const id = req.params.id;
-  const categories = await getAllCategories();
-  const subCategory = await getSubCategoryById(id);
+  const Brand = await getBrandById(id);
   res.render('admin/pages/subCategory/edit.ejs', {
-    subCategory,
-    categories,
+    Brand,
     success: req.flash('success'),
     errors: req.flash('errors'),
   });
 };
 
 const update = async (req, res) => {
-  const { name, category_id, status } = req.body;
+  const { name, status,image } = req.body;
   const { id } = req.params;
   const data = {
     name,
     status,
-    category_id,
+    image,
   };
 
-  await updateSubCategory(id, data);
+  await updateBrand(id, data);
   req.flash('success', 'Cập Nhật Danh Mục Thành Công');
-  res.redirect('/admin/sub-category');
+  res.redirect('/admin/brand');
 };
 
 const deleteSubCategory = async (req, res) => {
   const { id } = req.params;
-  await deleteSubCategoryByID(id);
+  await deleteBrandByID(id);
   req.flash('success', 'Xóa Danh Mục Thành Công');
-  res.redirect('/admin/sub-category');
+  res.redirect('/admin/brand');
 };
 
 const changeStatus = async (req, res) => {
   const { id } = req.params;
-  const subCategory = await getSubCategoryById(id);
-  subCategory.status = subCategory.status === '1' ? '0' : '1';
-  await subCategory.save();
+  const Brand = await getBrandById(id);
+  Brand.status = Brand.status === '1' ? '0' : '1';
+  await Brand.save();
   res.json({ message: 'Thay Đổi Trạng Thái Thành Công ', status: 'success' });
 };
 
