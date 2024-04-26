@@ -13,4 +13,7 @@ homeRouter.get('/login', HomeController.login);
 // ? [GET] /register
 homeRouter.get('/register', HomeController.register);
 
+// ? [GET] /test
+homeRouter.get('/test', HomeController.test);
+
 module.exports = homeRouter;

@@ -13,6 +13,10 @@ class HomeController {
   register(req, res) {
     res.render('client/pages/register.ejs');
   }
+
+  test(req, res) {
+    res.render('client/pages/test.ejs');
+  }
 }
 
 module.exports = new HomeController();
