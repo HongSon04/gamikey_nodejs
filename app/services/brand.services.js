@@ -18,14 +18,32 @@ const getBrandById = async (id) => {
 };
 
 const updateBrand = async (id, data) => {
-  return await Brand.updateOne(
-    { _id: id },
-    {
-      name: data.name,
-      status: data.status,
-      category_id: data.category_id,
-    },
-  );
+  if (data.image != null) {
+    // ? Delete old image
+    const brand = await Brand.findById(id);
+    if (brand.image != null) {
+      return await Brand.updateOne(
+        {
+          _id: id,
+        },
+        {
+          name: data.name,
+          status: data.status,
+          image: data.image,
+        },
+      );
+    }
+  } else {
+    return await Brand.updateOne(
+      {
+        _id: id,
+      },
+      {
+        name: data.name,
+        status: data.status,
+      },
+    );
+  }
 };
 
 const deleteBrandByID = async (id) => {

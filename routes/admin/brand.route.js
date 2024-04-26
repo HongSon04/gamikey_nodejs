@@ -19,7 +19,12 @@ brandRouter.get('/', index);
 brandRouter.get('/create', create);
 brandRouter.get('/edit/:id', edit);
 brandRouter.post('/store', fileUpload.single('image'), uploadCloud, store);
-brandRouter.patch('/update/:id', update);
+brandRouter.patch(
+  '/update/:id',
+  fileUpload.single('image'),
+  uploadCloud,
+  update,
+);
 brandRouter.delete('/delete/:id', deleteSubCategory);
 brandRouter.patch('/change-status/:id', changeStatus);
 

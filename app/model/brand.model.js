@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-updater');
+
 mongoose.plugin(slug);
 
 const brandSchema = new mongoose.Schema(
@@ -13,8 +14,9 @@ const brandSchema = new mongoose.Schema(
       slug: 'name',
     },
     status: {
-      type: Boolean,
-      default: true,
+      type: String,
+      enum: ['0', '1'],
+      default: '1', // ? 0: inactive, 1: active
     },
     image: {
       type: String,

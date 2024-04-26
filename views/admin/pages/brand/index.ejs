@@ -35,7 +35,7 @@
               </thead>
               <tbody>
                 <% if(Brands.length> 0) { %> <% Brands.forEach((Brands,index)=> { %>
-                  <!-- get name category -->
+                    <!-- get name category -->
                     <tr>
                       <td>
                         <%= index + 1 %>
@@ -44,7 +44,7 @@
                         <%= Brands.id %>
                       </td>
                       <td>
-                        <img src="<%= Brands.image %>" style="width: 150px;height: 100px;" alt="">
+                        <img src="<%= Brands.image %>" style="width: 100px;height: 100px; border-radius: 16px;" alt="">
                       </td>
                       <td>
                         <%= Brands.name %>
@@ -52,8 +52,8 @@
                       <td>
                         <% if(Brands.status==1) { %>
                           <label class="switch">
-                            <input type="checkbox" checked class="switch-input change-status"
-                              data-id="<%= Brands.id%>" style="width: 100%; height: 100%;" />
+                            <input type="checkbox" checked class="switch-input change-status" data-id="<%= Brands.id%>"
+                              style="width: 100%; height: 100%;" />
                             <span class="switch-toggle-slider">
                               <span class="switch-on">
                                 <i class="ti ti-check"></i>
@@ -78,16 +78,19 @@
                             </label>
                             <% } %>
                       </td>
-                      <td class="d-flex">
-                        <!-- EDIT BUTTON -->
-                        <a href="/admin/sub-category/edit/<%= Brands.id%>"
-                          class="btn btn-warning waves-effect waves-light"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <!-- DELETE BUTTON -->
-                        <form action="/admin/sub-category/delete/<%= Brands.id%>?_method=DELETE" method="post"
-                          class="delete-item-form mx-3">
-                          <button class="btn btn-danger waves-effect waves-light delete-item"><i
-                              class="fa-solid fa-trash-can"></i></button>
-                        </form>
+                      <td>
+                        <div class="d-flex">
+                          <!-- EDIT BUTTON -->
+                          <a href="/admin/brand/edit/<%= Brands.id%>"
+                            class="btn btn-warning waves-effect waves-light"><i
+                              class="fa-solid fa-pen-to-square"></i></a>
+                          <!-- DELETE BUTTON -->
+                          <form action="/admin/brand/delete/<%= Brands.id%>?_method=DELETE" method="post"
+                            class="delete-item-form mx-3">
+                            <button class="btn btn-danger waves-effect waves-light delete-item"><i
+                                class="fa-solid fa-trash-can"></i></button>
+                          </form>
+                        </div>
                       </td>
                     </tr>
                     <% })%>
@@ -144,7 +147,7 @@
           $.ajax({
             type: "PATCH",
             dataType: "json",
-            url: '/admin/sub-category/change-status/:id?_method=PATCH'.replace(':id', id),
+            url: '/admin/brand/change-status/:id?_method=PATCH'.replace(':id', id),
             success: function (data) {
               if (data.status == 'success') {
                 toastr.success(data.message, 'Thành Công');

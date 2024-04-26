@@ -14,6 +14,8 @@ const index = async (req, res) => {
   const SubCategories = await getAllSubCategories();
   res.render('admin/pages/subCategory/index.ejs', {
     SubCategories,
+    pageTitle: 'Danh Mục Phụ',
+    route: 'subcategory',
     success: req.flash('success'),
   });
 };
@@ -23,6 +25,8 @@ const create = async (req, res) => {
   res.render('admin/pages/subCategory/create.ejs', {
     errors: req.flash('errors'),
     categories,
+    pageTitle: 'Danh Mục Phụ',
+    route: 'subcategory',
   });
 };
 
@@ -46,6 +50,8 @@ const edit = async (req, res) => {
   res.render('admin/pages/subCategory/edit.ejs', {
     subCategory,
     categories,
+    pageTitle: 'Danh Mục Phụ',
+    route: 'subcategory',
     success: req.flash('success'),
     errors: req.flash('errors'),
   });

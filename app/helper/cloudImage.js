@@ -30,10 +30,9 @@ const uploadCloud = async (req, res, next) => {
   try {
     const result = await upload(req);
     req.body.image = result.secure_url;
-    console.log('Helper:' + req.body.image);
     next();
   } catch (error) {
-    console.log(error);
+    next();
   }
 };
 

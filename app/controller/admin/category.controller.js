@@ -10,6 +10,8 @@ const index = async (req, res) => {
   const categories = await getAllCategories();
   res.render('admin/pages/category/index.ejs', {
     categories,
+    pageTitle: 'Danh Sách Danh Mục',
+    route: 'category',
     success: req.flash('success'),
   });
 };
@@ -17,12 +19,14 @@ const index = async (req, res) => {
 const create = (req, res) => {
   res.render('admin/pages/category/create.ejs', {
     errors: req.flash('errors'),
+    pageTitle: 'Danh Sách Danh Mục',
+    route: 'category',
   });
 };
 
 const store = async (req, res) => {
   const { name, status } = req.body;
-  
+
   await category.save();
   req.flash('success', 'Thêm Danh Mục Thành Công');
 
@@ -34,6 +38,8 @@ const edit = async (req, res) => {
   const category = await getCategoryById(id);
   res.render('admin/pages/category/edit.ejs', {
     category,
+    pageTitle: 'Danh Sách Danh Mục',
+    route: 'category',
     success: req.flash('success'),
     errors: req.flash('errors'),
   });

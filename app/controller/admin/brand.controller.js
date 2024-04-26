@@ -11,6 +11,8 @@ const index = async (req, res) => {
   const Brands = await getAllBrands();
   res.render('admin/pages/brand/index.ejs', {
     Brands,
+    pageTitle: 'Danh Sách Thương Hiệu',
+    route: 'brand',
     success: req.flash('success'),
   });
 };
@@ -18,6 +20,8 @@ const index = async (req, res) => {
 const create = async (req, res) => {
   res.render('admin/pages/brand/create.ejs', {
     errors: req.flash('errors'),
+    pageTitle: 'Danh Sách Thương Hiệu',
+    route: 'brand',
   });
 };
 
@@ -37,22 +41,25 @@ const store = async (req, res) => {
 const edit = async (req, res) => {
   const id = req.params.id;
   const Brand = await getBrandById(id);
-  res.render('admin/pages/subCategory/edit.ejs', {
+  res.render('admin/pages/brand/edit.ejs', {
+    route: 'brand',
     Brand,
+    pageTitle: 'Danh Sách Thương Hiệu',
     success: req.flash('success'),
     errors: req.flash('errors'),
   });
 };
 
 const update = async (req, res) => {
-  const { name, status,image } = req.body;
+  const { name, status, image } = req.body;
   const { id } = req.params;
   const data = {
     name,
     status,
-    image,
   };
-
+  if (image) {
+    data.image = image;
+  }
   await updateBrand(id, data);
   req.flash('success', 'Cập Nhật Danh Mục Thành Công');
   res.redirect('/admin/brand');
