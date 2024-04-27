@@ -42,7 +42,7 @@
             <span class="menu-header-text" data-i18n="Ecommerce">Ecommerce</span>
         </li>
         <li
-            class="menu-item <%= route === 'category' || route === 'subcategory' || route === 'brand' ? 'active open' : '' %>">
+            class="menu-item <%= route === 'category' || route === 'subcategory' || route === 'brand' || route === 'product' ? 'active open' : '' %>">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
                 <div data-i18n="Ecommerce">Ecommerce</div>
@@ -64,7 +64,11 @@
                     <div data-i18n="Thương Hiệu">Thương Hiệu</div>
                     </a>
                 </li>
-
+                <li class="menu-item <%= route === 'product' ? 'active' : '' %>"">
+                    <a href=" /admin/product" class="menu-link">
+                    <div data-i18n="Sản Phẩm">Sản Phẩm</div>
+                    </a>
+                </li>
             </ul>
         </li>
     </ul>

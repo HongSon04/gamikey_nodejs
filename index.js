@@ -26,6 +26,11 @@ app.use(flash());
 
 // ? MEthod Override
 app.use(methodOverride('_method'));
+/* New Route to the TinyMCE Node module */
+app.use(
+  '/tinymce',
+  express.static(path.join(__dirname, 'node_modules', 'tinymce')),
+);
 // ? Set Template Engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
