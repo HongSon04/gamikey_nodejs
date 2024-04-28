@@ -9,6 +9,7 @@ const {
   deleteBrandForeverServices,
 } = require('../../services/brand.services');
 
+// ? [GET] /admin/brand
 const index = async (req, res) => {
   // ? Get name of category from category_id of subCategory
   const Brands = await getAllBrands();
@@ -20,6 +21,7 @@ const index = async (req, res) => {
   });
 };
 
+// ? [GET] /admin/brand/create
 const create = async (req, res) => {
   res.render('admin/pages/brand/create.ejs', {
     errors: req.flash('errors'),
@@ -28,6 +30,7 @@ const create = async (req, res) => {
   });
 };
 
+// ? [POST] /admin/brand/store
 const store = async (req, res) => {
   const { name, status, image } = req.body;
   const data = {
@@ -41,6 +44,7 @@ const store = async (req, res) => {
   res.redirect('/admin/brand');
 };
 
+// ? [GET] /admin/brand/edit/:id
 const edit = async (req, res) => {
   const id = req.params.id;
   const Brand = await getBrandById(id);
@@ -53,6 +57,7 @@ const edit = async (req, res) => {
   });
 };
 
+// ? [PATCH] /admin/brand/update/:id
 const update = async (req, res) => {
   const { name, status, image } = req.body;
   const { id } = req.params;
@@ -68,6 +73,7 @@ const update = async (req, res) => {
   res.redirect('/admin/brand');
 };
 
+// ? [DELETE] /admin/brand/delete/:id
 const deleteSubCategory = async (req, res) => {
   const { id } = req.params;
   await deleteBrandByID(id);
@@ -75,6 +81,7 @@ const deleteSubCategory = async (req, res) => {
   res.redirect('/admin/brand');
 };
 
+// ? [PATCH] /admin/brand/change-status/:id
 const changeStatus = async (req, res) => {
   const { id } = req.params;
   const Brand = await getBrandById(id);
@@ -83,6 +90,7 @@ const changeStatus = async (req, res) => {
   res.json({ message: 'Thay Đổi Trạng Thái Thành Công ', status: 'success' });
 };
 
+//? [GET] /admin/brand/trash
 const trashBrand = async (req, res) => {
   const Brands = await getAllTrashBrands();
   res.render('admin/pages/brand/trash.ejs', {
@@ -93,6 +101,7 @@ const trashBrand = async (req, res) => {
   });
 };
 
+// ? [PATCH] /admin/brand/restore/:id
 const restoreBrand = async (req, res) => {
   const { id } = req.params;
   await restoreBrandServices(id);
@@ -100,6 +109,7 @@ const restoreBrand = async (req, res) => {
   res.redirect('/admin/brand/trash');
 };
 
+// ? [DELETE] /admin/brand/delete-forever/:id
 const deleteBrandForever = async (req, res) => {
   const { id } = req.params;
   await deleteBrandForeverServices(id);

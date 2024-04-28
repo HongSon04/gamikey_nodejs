@@ -13,7 +13,7 @@
           <h4 class="mb-1 mt-3">Thùng Rác</h4>
         </div>
         <div class="d-flex align-content-center flex-wrap gap-3">
-          <a href="/admin/brand" class="btn btn-primary">Quay Lại</a>
+          <a href="/admin/product" class="btn btn-primary">Quay Lại</a>
         </div>
       </div>
 
@@ -26,41 +26,81 @@
               <thead>
                 <tr>
                   <th>STT</th>
-                  <th>ID</th>
-                  <th>Hình Ảnh</th>
-                  <th>Tên Thương Hiệu</th>
-                  <th>Ngày Xóa</th>
+                  <th>Ảnh</th>
+                  <th>Tên Sản Phẩm</th>
+                  <th>Danh Mục</th>
+                  <th>Danh Mục Phụ</th>
+                  <th>Thương Hiệu</th>
+                  <th>Giá</th>
+                  <th>Trạng Thái</th>
                   <th>Hành Động</th>
                 </tr>
               </thead>
               <tbody>
-                <% if(Brands.length> 0) { %> <% Brands.forEach((Brands,index)=> { %>
-                    <!-- get name category -->
+                <% if(products.length> 0) { %> <% products.forEach((product,index)=> { %>
                     <tr>
                       <td>
                         <%= index + 1 %>
                       </td>
                       <td>
-                        <%= Brands.id %>
+                        <img src="<%= product.image %>" alt="<%= product.name %>"
+                          style="width: 100px; height: 100px; border-radius: 16px;" />
                       </td>
                       <td>
-                        <img src="<%= Brands.image %>" style="width: 100px;height: 100px; border-radius: 16px;" alt="">
+                        <%= product.name %>
                       </td>
                       <td>
-                        <%= Brands.name %>
+                        <%= product.category_id.name %>
                       </td>
                       <td>
-                        <%= Brands.deletedAt.toLocaleString() %>
+                        <%= product.sub_category_id.name %>
+                      </td>
+                      <td>
+                        <%= product.brand_id.name %>
+                      </td>
+                      <td>
+                        <%= product.price %>
+                      </td>
+                      <td>
+                        <% if(product.status==1) { %>
+                          <label class="switch">
+                            <input type="checkbox" checked class="switch-input change-status" data-id="<%= product.id%>"
+                              style="width: 100%; height: 100%;" />
+                            <span class="switch-toggle-slider">
+                              <span class="switch-on">
+                                <i class="ti ti-check"></i>
+                              </span>
+                              <span class="switch-off">
+                                <i class="ti ti-x"></i>
+                              </span>
+                            </span>
+                          </label>
+                          <% } else { %>
+                            <label class="switch">
+                              <input type="checkbox" class="switch-input change-status" data-id="<%= product.id%>"
+                                style="width: 100%; height: 100%;" />
+                              <span class="switch-toggle-slider">
+                                <span class="switch-on">
+                                  <i class="ti ti-check"></i>
+                                </span>
+                                <span class="switch-off">
+                                  <i class="ti ti-x"></i>
+                                </span>
+                              </span>
+                            </label>
+                            <% } %>
                       </td>
                       <td>
                         <div class="d-flex">
                           <!-- EDIT BUTTON -->
-                          <a href="/admin/brand/restore/<%= Brands.id%>" class="btn btn-warning waves-effect waves-light"><i
+                          <a href="/admin/product/restore/<%= product.id%>"
+                            class="btn btn-warning waves-effect waves-light"><i
                               class="fa-solid fa-rotate-left fa-fw"></i></a>
                           <!-- DELETE BUTTON -->
-                          <form action="/admin/brand/deletePermanently/<%= Brands.id%>?_method=DELETE" method="post"
+                          <form action="/admin/product/deletePermanently/<%= product.id%>?_method=DELETE" method="post"
                             class="delete-item-form mx-3">
-                            <button class="btn btn-danger waves-effect waves-light delete-item"><i class="fa-solid fa-infinity"></i></button>
+                            <button class="btn btn-danger waves-effect waves-light delete-item"><i
+                                class="fa-solid fa-infinity"></i></button>
                           </form>
                         </div>
                       </td>
@@ -100,7 +140,7 @@
           $.ajax({
             type: "PATCH",
             dataType: "json",
-            url: '/admin/brand/change-status/:id?_method=PATCH'.replace(':id', id),
+            url: '/admin/product/change-status/:id?_method=PATCH'.replace(':id', id),
             success: function (data) {
               if (data.status == 'success') {
                 toastr.success(data.message, 'Thành Công');

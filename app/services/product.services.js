@@ -1,7 +1,10 @@
-const Product = require('../model/Product.model');
+const Product = require('../model/product.model');
 
 const getAllProducts = async () => {
-  return await Product.find({ deletedAt: null });
+  return await Product.find({ deletedAt: null })
+    .populate('category_id', 'name')
+    .populate('sub_category_id', 'name')
+    .populate('brand_id', 'name');
 };
 
 const storeProduct = async (data) => {
@@ -28,16 +31,15 @@ const storeProduct = async (data) => {
     product.position = toTalProduct + 1;
   }
 
-  
-
-  console.log(product);
-
   return await product.save();
 };
 
 const getProductById = async (id) => {
-  // ? Lấy tên và id của category
-  return await Product.findOne({ _id: id });
+  try {
+    return await Product.findOne({ _id: id });
+  } catch (error) {
+    return null;
+  }
 };
 
 const updateProduct = async (id, data) => {
@@ -92,20 +94,32 @@ const updateProduct = async (id, data) => {
 };
 
 const deleteProductByID = async (id) => {
-  return await Product.deleteOne({ _id: id });
+  return await Product.updateOne(
+    { _id: id },
+    {
+      expiredAt: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+      deletedAt: new Date(),
+    },
+  );
 };
 
 const getAllTrashProductsServices = async () => {
-  return await Product.find({ deletedAt: { $ne: null } });
+  return await Product.find({ deletedAt: { $ne: null } })
+    .populate('category_id', 'name')
+    .populate('sub_category_id', 'name')
+    .populate('brand_id', 'name');
 };
 
 const restoreProductByIDServies = async (id) => {
-  return await Product.updateOne({ _id: id }, { deletedAt: null, expiredAt: null });
+  return await Product.updateOne(
+    { _id: id },
+    { deletedAt: null, expiredAt: null },
+  );
 };
 
 const deleteProductPermanentlyServices = async (id) => {
   return await Product.deleteOne({ _id: id });
-}
+};
 
 module.exports = {
   getAllProducts,

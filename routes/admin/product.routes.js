@@ -11,6 +11,9 @@ const {
   update,
   deleteProduct,
   changeStatus,
+  trash,
+  deletePermanently,
+  restore,
 } = require('../../app/controller/admin/product.controller');
 const {
   getSubCategoryByIdCategory,
@@ -21,8 +24,10 @@ const {
 } = require('../../app/validation/product.validation');
 
 productRouter.get('/', index);
+productRouter.get('/trash', trash);
 productRouter.get('/create', create);
 productRouter.get('/edit/:id', edit);
+productRouter.get('/restore/:id', restore);
 productRouter.post(
   '/store',
   fileUpload.single('image'),
@@ -38,6 +43,7 @@ productRouter.patch(
   update,
 );
 productRouter.delete('/delete/:id', deleteProduct);
+productRouter.delete('/deletePermanently/:id', deletePermanently);
 productRouter.patch('/change-status/:id', changeStatus);
 productRouter.get('/getSubCategoyByIdCategory/:id', getSubCategoryByIdCategory);
 

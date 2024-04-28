@@ -1,4 +1,4 @@
-const Product = require('../../model/Product.model');
+const Product = require('../../model/product.model');
 const { getAllBrands } = require('../../services/brand.services');
 const { getAllCategories } = require('../../services/category.services');
 const {
@@ -7,9 +7,13 @@ const {
   deleteProductByID,
   getAllProducts,
   storeProduct,
+  getAllTrashProductsServices,
+  restoreProductByIDServies,
+  deleteProductPermanentlyServices,
 } = require('../../services/product.services');
 const { getAllSubCategories } = require('../../services/subCategory.services');
 
+// ? [GET] /admin/product
 const index = async (req, res) => {
   const products = await getAllProducts();
   res.render('admin/pages/product/index.ejs', {
@@ -21,6 +25,7 @@ const index = async (req, res) => {
   });
 };
 
+// ? [GET] /admin/product/create
 const create = async (req, res) => {
   const categories = await getAllCategories();
   const brands = await getAllBrands();
@@ -34,6 +39,7 @@ const create = async (req, res) => {
   });
 };
 
+// ? [POST] /admin/product/store
 const store = async (req, res) => {
   const {
     name,
@@ -78,6 +84,7 @@ const store = async (req, res) => {
   res.redirect('/admin/product');
 };
 
+// ? [GET] /admin/product/edit/:id
 const edit = async (req, res) => {
   const id = req.params.id;
   const product = await getProductById(id);
@@ -96,6 +103,7 @@ const edit = async (req, res) => {
   });
 };
 
+// ? [PATCH] /admin/product/update/:id
 const update = async (req, res) => {
   const { id } = req.params;
   const {
@@ -137,6 +145,7 @@ const update = async (req, res) => {
   res.redirect('/admin/product');
 };
 
+// ? [DELETE] /admin/product/delete/:id
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
   await deleteProductByID(id);
@@ -144,12 +153,41 @@ const deleteProduct = async (req, res) => {
   res.redirect('/admin/product');
 };
 
+// ? [PATCH] /admin/product/change-status/:id
 const changeStatus = async (req, res) => {
   const { id } = req.params;
   const product = await Product.findById(id);
   product.status = product.status === '1' ? '0' : '1';
   await product.save();
   res.json({ message: 'Thay Đổi Trạng Thái Thành Công ', status: 'success' });
+};
+
+// ? [GET] /admin/product/trash
+const trash = async (req, res) => {
+  const products = await getAllTrashProductsServices();
+  res.render('admin/pages/product/trash.ejs', {
+    products,
+    pageTitle: 'Danh Sách Danh Mục',
+    route: 'product',
+    success: req.flash('success'),
+    errors: req.flash('errors'),
+  });
+};
+
+// ? [PATCH] /admin/product/restore/:id
+const restore = async (req, res) => {
+  const { id } = req.params;
+  await restoreProductByIDServies(id);
+  req.flash('success', 'Khôi Phục Danh Mục Thành Công');
+  res.redirect('/admin/product');
+};
+
+// ? [DELETE] /admin/product/delete-permanently/:id
+const deletePermanently = async (req, res) => {
+  const { id } = req.params;
+  await deleteProductPermanentlyServices(id);
+  req.flash('success', 'Xóa Vĩnh Viễn Danh Mục Thành Công');
+  res.redirect('/admin/product/trash');
 };
 
 module.exports = {
@@ -160,4 +198,7 @@ module.exports = {
   update,
   deleteProduct,
   changeStatus,
+  trash,
+  restore,
+  deletePermanently,
 };

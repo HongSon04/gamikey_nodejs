@@ -31,7 +31,7 @@ const subCategorySchema = new mongoose.Schema({
     default: null,
     expires: 0,
   },
-});
+}, {timestamps: true});
 
 const SubCategory = mongoose.model(
   'SubCategory',

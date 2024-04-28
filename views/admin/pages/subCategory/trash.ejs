@@ -68,7 +68,7 @@
                     <% })%>
                       <% } else { %>
                         <tr>
-                          <td colspan="4" class="text-center">Không có dữ liệu</td>
+                          <td colspan="20" class="text-center">Không có dữ liệu</td>
                         </tr>
                         <% } %>
               </tbody>
@@ -91,25 +91,6 @@
       let table = $('.datatables-ajax').DataTable({
         processing: true,
         responsive: true,
-      });
-      // ? Prevent Default Form delete-item-form 
-      $('.delete-item').on('click', function (e) {
-        e.preventDefault();
-        let form = $(this).closest('form');
-        Swal.fire({
-          title: 'Bạn có chắc chắn muốn xóa?',
-          text: "Dữ liệu sẽ không thể khôi Phụ lại sau khi xóa!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Xóa',
-          cancelButtonText: 'Hủy'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            form.submit();
-          }
-        })
       });
 
       // ? Change Status

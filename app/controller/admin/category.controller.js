@@ -8,6 +8,7 @@ const {
   deleteForeverCategory,
 } = require('../../services/category.services');
 
+// ? [GET] /admin/category
 const index = async (req, res) => {
   const categories = await getAllCategories();
   res.render('admin/pages/category/index.ejs', {
@@ -15,9 +16,11 @@ const index = async (req, res) => {
     pageTitle: 'Danh Sách Danh Mục',
     route: 'category',
     success: req.flash('success'),
+    errors: req.flash('errors'),
   });
 };
 
+// ? [GET] /admin/category/create
 const create = (req, res) => {
   res.render('admin/pages/category/create.ejs', {
     errors: req.flash('errors'),
@@ -26,6 +29,7 @@ const create = (req, res) => {
   });
 };
 
+// ? [POST] /admin/category/store
 const store = async (req, res) => {
   try {
     const { name, status } = req.body;
@@ -41,6 +45,7 @@ const store = async (req, res) => {
   }
 };
 
+// ? [GET] /admin/category/edit/:id
 const edit = async (req, res) => {
   const id = req.params.id;
   const category = await getCategoryById(id);
@@ -53,6 +58,7 @@ const edit = async (req, res) => {
   });
 };
 
+// ? [PATCH] /admin/category/update/:id
 const update = async (req, res) => {
   const { name, status } = req.body;
   const { id } = req.params;
@@ -72,6 +78,7 @@ const update = async (req, res) => {
   }
 };
 
+// ? [DELETE] /admin/category/delete/:id
 const deleteCategory = async (req, res) => {
   const { id } = req.params;
   await deleteCategoryByID(id);
@@ -79,6 +86,7 @@ const deleteCategory = async (req, res) => {
   res.redirect('/admin/category');
 };
 
+// ? [PATCH] /admin/category/change-status/:id
 const changeStatus = async (req, res) => {
   const { id } = req.params;
   const category = await Category.findById(id);
@@ -87,6 +95,7 @@ const changeStatus = async (req, res) => {
   res.json({ message: 'Thay Đổi Trạng Thái Thành Công ', status: 'success' });
 };
 
+// ? [GET] /admin/category/trash
 const getTrashCategories = async (req, res) => {
   const categories = await Category.find({ deletedAt: { $ne: null } });
   res.render('admin/pages/category/trash.ejs', {
@@ -97,6 +106,7 @@ const getTrashCategories = async (req, res) => {
   });
 };
 
+// ? [PATCH] /admin/category/restore/:id
 const restore = async (req, res) => {
   const { id } = req.params;
   await restoreCategory(id);
@@ -104,6 +114,7 @@ const restore = async (req, res) => {
   res.redirect('/admin/category/trash');
 };
 
+// ? [DELETE] /admin/category/delete-permanently/:id
 const deletePermanently = async (req, res) => {
   const { id } = req.params;
   await deleteForeverCategory(id);

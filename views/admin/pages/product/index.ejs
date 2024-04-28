@@ -29,6 +29,9 @@
                   <th>STT</th>
                   <th>Ảnh</th>
                   <th>Tên Sản Phẩm</th>
+                  <th>Danh Mục</th>
+                  <th>Danh Mục Phụ</th>
+                  <th>Thương Hiệu</th>
                   <th>Giá</th>
                   <th>Trạng Thái</th>
                   <th>Hành Động</th>
@@ -46,6 +49,15 @@
                       </td>
                       <td>
                         <%= product.name %>
+                      </td>
+                      <td>
+                        <%= product.category_id.name %>
+                      </td>
+                      <td>
+                        <%= product.sub_category_id.name %>
+                      </td>
+                      <td>
+                        <%= product.brand_id.name %>
                       </td>
                       <td>
                         <%= product.price %>
@@ -91,13 +103,26 @@
                             <button class="btn btn-danger waves-effect waves-light delete-item"><i
                                 class="fa-solid fa-trash-can"></i></button>
                           </form>
+                          <div class="btn-group">
+                            <button type="button"
+                              class="btn btn-primary dropdown-toggle hide-arrow waves-effect waves-light"
+                              data-bs-toggle="dropdown" aria-expanded="true">
+                              <i class="fa-solid fa-gear"></i>
+                            </button>
+                            <ul class="dropdown-menu" data-popper-placement="top-start" data-popper-reference-hidden=""
+                              style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(0px, -40px);">
+                              <li><a class="dropdown-item" href="/admin/product-variant/<%= product.id%>">Variants</a></li>
+                              <li><a class="dropdown-item" href="javascript:void(0);">Thêm Tài Khoản</a></li>
+
+                            </ul>
+                          </div>
                         </div>
                       </td>
                     </tr>
                     <% })%>
                       <% } else { %>
                         <tr>
-                          <td colspan="4" class="text-center">Không có dữ liệu</td>
+                          <td colspan="20" class="text-center">Không có dữ liệu</td>
                         </tr>
                         <% } %>
               </tbody>
@@ -118,29 +143,8 @@
         toastr.success(success, 'Thành Công');
       }
       let table = $('.datatables-ajax').DataTable({
-        processing: true,
         responsive: true,
       });
-      // ? Prevent Default Form delete-item-form 
-      $('.delete-item').on('click', function (e) {
-        e.preventDefault();
-        let form = $(this).closest('form');
-        Swal.fire({
-          title: 'Bạn có chắc chắn muốn xóa?',
-          text: "Dữ liệu sẽ không thể khôi Phụ lại sau khi xóa!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Xóa',
-          cancelButtonText: 'Hủy'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            form.submit();
-          }
-        })
-      });
-
       // ? Change Status
       $('.change-status').on('change', function () {
         let id = $(this).data('id');
@@ -161,4 +165,5 @@
       })
     });
   </script>
+
   <%- include('../../partials/footer.ejs') %>

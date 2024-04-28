@@ -10,6 +10,7 @@ const {
   deleteForeverSubCategory,
 } = require('../../services/subCategory.services');
 
+// ? [GET] /admin/sub-category
 const index = async (req, res) => {
   // ? Get name of category from category_id of subCategory
   const SubCategories = await getAllSubCategories();
@@ -21,6 +22,7 @@ const index = async (req, res) => {
   });
 };
 
+// ? [GET] /admin/sub-category/create
 const create = async (req, res) => {
   const categories = await getAllCategories();
   res.render('admin/pages/subCategory/create.ejs', {
@@ -31,6 +33,7 @@ const create = async (req, res) => {
   });
 };
 
+// ? [POST] /admin/sub-category/store
 const store = async (req, res) => {
   try {
     const { name, category_id, status } = req.body;
@@ -49,6 +52,7 @@ const store = async (req, res) => {
   }
 };
 
+// ? [GET] /admin/sub-category/edit/:id
 const edit = async (req, res) => {
   const id = req.params.id;
   const categories = await getAllCategories();
@@ -63,6 +67,7 @@ const edit = async (req, res) => {
   });
 };
 
+// ? [PATCH] /admin/sub-category/update/:id
 const update = async (req, res) => {
   try {
     const { name, category_id, status } = req.body;
@@ -82,6 +87,7 @@ const update = async (req, res) => {
   }
 };
 
+// ? [DELETE] /admin/sub-category/delete/:id
 const deleteSubCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -94,6 +100,7 @@ const deleteSubCategory = async (req, res) => {
   }
 };
 
+//  ? [PATCH] /admin/sub-category/change-status/:id
 const changeStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -106,12 +113,14 @@ const changeStatus = async (req, res) => {
   }
 };
 
+// ? [GET] /admin/sub-category/getSubCategoryByIdCategory/:id
 const getSubCategoryByIdCategory = async (req, res) => {
   const { id } = req.params;
   const subCategories = await SubCategory.find({ category_id: id });
   res.json(subCategories);
 };
 
+//  ? [GET] /admin/sub-category/trash
 const trashSubCategory = async (req, res) => {
   const SubCategories = await SubCategory.find({
     deletedAt: { $ne: null },
@@ -124,6 +133,7 @@ const trashSubCategory = async (req, res) => {
   });
 };
 
+// ? [PATCH] /admin/sub-category/restore/:id
 const restoreSubCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -136,6 +146,7 @@ const restoreSubCategory = async (req, res) => {
   }
 };
 
+// ? [DELETE] /admin/sub-category/delete-permanently/:id
 const deletePermanently = async (req, res) => {
   try {
     const { id } = req.params;
