@@ -4,6 +4,8 @@ const {
   getCategoryById,
   updateCategory,
   deleteCategoryByID,
+  restoreCategory,
+  deleteForeverCategory,
 } = require('../../services/category.services');
 
 const index = async (req, res) => {
@@ -25,12 +27,18 @@ const create = (req, res) => {
 };
 
 const store = async (req, res) => {
-  const { name, status } = req.body;
+  try {
+    const { name, status } = req.body;
+    const category = new Category({ name, status });
+    await category.save();
+    req.flash('success', 'Thêm Danh Mục Thành Công');
 
-  await category.save();
-  req.flash('success', 'Thêm Danh Mục Thành Công');
-
-  res.redirect('/admin/category');
+    res.redirect('/admin/category');
+  } catch (error) {
+    console.log('Đã lỗi: ', error);
+    req.flash('errors', { msg: 'Thêm Danh Mục Thất Bại Hoặc Đã Tồn Tại Tên' });
+    res.redirect('/admin/category/create');
+  }
 };
 
 const edit = async (req, res) => {
@@ -48,14 +56,20 @@ const edit = async (req, res) => {
 const update = async (req, res) => {
   const { name, status } = req.body;
   const { id } = req.params;
-  const data = {
-    name,
-    status,
-  };
+  try {
+    const data = {
+      name,
+      status,
+    };
 
-  await updateCategory(id, data);
-  req.flash('success', 'Cập Nhật Danh Mục Thành Công');
-  res.redirect('/admin/category');
+    await updateCategory(id, data);
+    req.flash('success', 'Cập Nhật Danh Mục Thành Công');
+    res.redirect('/admin/category');
+  } catch (error) {
+    console.log('Đã lỗi: ', error);
+    req.flash('errors', { msg: 'Cập Nhật Danh Mục Thất Bại' });
+    res.redirect('/admin/category/edit/' + id);
+  }
 };
 
 const deleteCategory = async (req, res) => {
@@ -73,6 +87,30 @@ const changeStatus = async (req, res) => {
   res.json({ message: 'Thay Đổi Trạng Thái Thành Công ', status: 'success' });
 };
 
+const getTrashCategories = async (req, res) => {
+  const categories = await Category.find({ deletedAt: { $ne: null } });
+  res.render('admin/pages/category/trash.ejs', {
+    categories,
+    pageTitle: 'Danh Sách Danh Mục',
+    route: 'category',
+    success: req.flash('success'),
+  });
+};
+
+const restore = async (req, res) => {
+  const { id } = req.params;
+  await restoreCategory(id);
+  req.flash('success', 'Khôi Phục Danh Mục Thành Công');
+  res.redirect('/admin/category/trash');
+};
+
+const deletePermanently = async (req, res) => {
+  const { id } = req.params;
+  await deleteForeverCategory(id);
+  req.flash('success', 'Xóa Vĩnh Viễn Danh Mục Thành Công');
+  res.redirect('/admin/category/trash');
+};
+
 module.exports = {
   index,
   create,
@@ -81,4 +119,7 @@ module.exports = {
   update,
   deleteCategory,
   changeStatus,
+  getTrashCategories,
+  restore,
+  deletePermanently,
 };

@@ -1,3 +1,4 @@
+const e = require('express');
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-updater');
 
@@ -7,10 +8,13 @@ const CategorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      required: true,
+      unique: true,
     },
     slug: {
       type: String,
       slug: 'name',
+      slugPaddingSize: 3,
       unique: true,
     },
     status: {
@@ -33,10 +37,13 @@ const CategorySchema = new mongoose.Schema(
     expiredAt: {
       type: Date,
       default: null,
+      expires: 0,
     },
   },
   { timestamps: true },
 );
+
+// ? Deleted If Datenow >= expiredAt
 
 const Category = mongoose.model('Category', CategorySchema, 'categories');
 

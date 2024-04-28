@@ -6,7 +6,8 @@ const {
   updateSubCategory,
   deleteSubCategoryByID,
   storeSubCategory,
-  changeStatusSubCategory,
+  restoreSubCategoryServices,
+  deleteForeverSubCategory,
 } = require('../../services/subCategory.services');
 
 const index = async (req, res) => {
@@ -111,6 +112,42 @@ const getSubCategoryByIdCategory = async (req, res) => {
   res.json(subCategories);
 };
 
+const trashSubCategory = async (req, res) => {
+  const SubCategories = await SubCategory.find({
+    deletedAt: { $ne: null },
+  }).populate('category_id', 'name');
+  res.render('admin/pages/subCategory/trash.ejs', {
+    SubCategories,
+    pageTitle: 'Danh Mục Phụ',
+    route: 'subcategory',
+    success: req.flash('success'),
+  });
+};
+
+const restoreSubCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await restoreSubCategoryServices(id);
+    req.flash('success', 'Khôi Phục Danh Mục Thành Công');
+    res.redirect('/admin/sub-category');
+  } catch (error) {
+    req.flash('errors', 'Khôi Phục Danh Mục Thất Bại');
+    res.redirect('/admin/sub-category');
+  }
+};
+
+const deletePermanently = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await deleteForeverSubCategory(id);
+    req.flash('success', 'Xóa Vĩnh Viễn Danh Mục Thành Công');
+    res.redirect('/admin/sub-category/trash');
+  } catch (error) {
+    req.flash('errors', 'Xóa Vĩnh Viễn Danh Mục Thất Bại');
+    res.redirect('/admin/sub-category/trash');
+  }
+};
+
 module.exports = {
   index,
   create,
@@ -120,4 +157,7 @@ module.exports = {
   deleteSubCategory,
   changeStatus,
   getSubCategoryByIdCategory,
+  deletePermanently,
+  restoreSubCategory,
+  trashSubCategory,
 };

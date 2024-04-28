@@ -5,16 +5,39 @@ const getAllProducts = async () => {
 };
 
 const storeProduct = async (data) => {
-  const Product = new Product({
+  const product = new Product({
     name: data.name,
     status: data.status,
     image: data.image,
+    price: data.price,
+    discount_price: data.discount_price,
+    type: data.type,
+    category_id: data.category_id,
+    sub_category_id: data.sub_category_id,
+    brand_id: data.brand_id,
+    description: data.description,
+    short_description: data.short_description,
+    start_discount: data.start_discount,
+    end_discount: data.end_discount,
+    status: data.status,
   });
-  return await Product.save();
+  if (data.position != null) {
+    product.position = data.position;
+  } else {
+    const toTalProduct = await Product.countDocuments();
+    product.position = toTalProduct + 1;
+  }
+
+  
+
+  console.log(product);
+
+  return await product.save();
 };
 
 const getProductById = async (id) => {
-  return await Product.findById(id);
+  // ? Lấy tên và id của category
+  return await Product.findOne({ _id: id });
 };
 
 const updateProduct = async (id, data) => {
@@ -30,6 +53,17 @@ const updateProduct = async (id, data) => {
           name: data.name,
           status: data.status,
           image: data.image,
+          price: data.price,
+          discount_price: data.discount_price,
+          type: data.type,
+          category_id: data.category_id,
+          sub_category_id: data.sub_category_id,
+          brand_id: data.brand_id,
+          description: data.description,
+          short_description: data.short_description,
+          start_discount: data.start_discount,
+          end_discount: data.end_discount,
+          status: data.status,
         },
       );
     }
@@ -41,14 +75,37 @@ const updateProduct = async (id, data) => {
       {
         name: data.name,
         status: data.status,
+        price: data.price,
+        discount_price: data.discount_price,
+        type: data.type,
+        category_id: data.category_id,
+        sub_category_id: data.sub_category_id,
+        brand_id: data.brand_id,
+        description: data.description,
+        short_description: data.short_description,
+        start_discount: data.start_discount,
+        end_discount: data.end_discount,
+        status: data.status,
       },
     );
   }
 };
 
 const deleteProductByID = async (id) => {
-  return await Product.updateOne({ _id: id }, { deletedAt: Date.now() });
+  return await Product.deleteOne({ _id: id });
 };
+
+const getAllTrashProductsServices = async () => {
+  return await Product.find({ deletedAt: { $ne: null } });
+};
+
+const restoreProductByIDServies = async (id) => {
+  return await Product.updateOne({ _id: id }, { deletedAt: null, expiredAt: null });
+};
+
+const deleteProductPermanentlyServices = async (id) => {
+  return await Product.deleteOne({ _id: id });
+}
 
 module.exports = {
   getAllProducts,
@@ -56,4 +113,7 @@ module.exports = {
   storeProduct,
   updateProduct,
   deleteProductByID,
+  getAllTrashProductsServices,
+  restoreProductByIDServies,
+  deleteProductPermanentlyServices,
 };

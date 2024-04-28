@@ -25,6 +25,11 @@ const brandSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    expiredAt: {
+      type: Date,
+      default: null,
+      expires: 0,
+    },
   },
   { timestamps: true },
 );

@@ -4,6 +4,9 @@ const {
   updateBrand,
   deleteBrandByID,
   getBrandById,
+  getAllTrashBrands,
+  restoreBrandServices,
+  deleteBrandForeverServices,
 } = require('../../services/brand.services');
 
 const index = async (req, res) => {
@@ -80,6 +83,30 @@ const changeStatus = async (req, res) => {
   res.json({ message: 'Thay Đổi Trạng Thái Thành Công ', status: 'success' });
 };
 
+const trashBrand = async (req, res) => {
+  const Brands = await getAllTrashBrands();
+  res.render('admin/pages/brand/trash.ejs', {
+    Brands,
+    pageTitle: 'Thùng Rác Thương Hiệu',
+    route: 'brand',
+    success: req.flash('success'),
+  });
+};
+
+const restoreBrand = async (req, res) => {
+  const { id } = req.params;
+  await restoreBrandServices(id);
+  req.flash('success', 'Khôi Phục Thương Hiệu Thành Công');
+  res.redirect('/admin/brand/trash');
+};
+
+const deleteBrandForever = async (req, res) => {
+  const { id } = req.params;
+  await deleteBrandForeverServices(id);
+  req.flash('success', 'Xóa Vĩnh Viễn Thương Hiệu Thành Công');
+  res.redirect('/admin/brand/trash');
+};
+
 module.exports = {
   index,
   create,
@@ -88,4 +115,7 @@ module.exports = {
   update,
   deleteSubCategory,
   changeStatus,
+  trashBrand,
+  restoreBrand,
+  deleteBrandForever,
 };

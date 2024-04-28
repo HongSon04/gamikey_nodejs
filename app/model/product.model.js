@@ -23,10 +23,14 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       slug: 'type',
     },
-    brand_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Brand' },
-    category_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+    brand_id: {
+      type: String,
+      ref: 'Brand',
+      default: null,
+    },
+    category_id: { type: String, ref: 'Category' },
     sub_category_id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: 'SubCategory',
     },
     description: { type: String, required: true },
@@ -38,7 +42,15 @@ const ProductSchema = new mongoose.Schema(
       enum: ['0', '1'],
       default: '1', // ? 0: inactive, 1: active
     },
-    deletedAt: { type: Date, default: null },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+    expiredAt: {
+      type: Date,
+      default: null,
+      expires: 0,
+    },
   },
   {
     timestamps: true,

@@ -3,25 +3,24 @@
 
   <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="py-3 mb-0">
-      <span class="text-muted fw-light">Ecommerce /</span><span class="fw-medium"> Danh Mục Phụ</span>
+      <span class="text-muted fw-light">Ecommerce /</span><span class="fw-medium"> Danh Mục</span>
     </h4>
 
     <div class="app-ecommerce">
       <!-- Add Product -->
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
         <div class="d-flex flex-column justify-content-center">
-          <h4 class="mb-1 mt-3">Danh Mục Phụ</h4>
+          <h4 class="mb-1 mt-3">Thùng Rác</h4>
         </div>
         <div class="d-flex align-content-center flex-wrap gap-3">
-          <a href="/admin/sub-category/trash" class="btn btn-danger">Thùng Rác</a>
-          <a href="/admin/sub-category/create" class="btn btn-primary">Thêm Danh Mục Phụ</a>
+          <a href="/admin/category" class="btn btn-primary">Quay Lại</a>
         </div>
       </div>
 
       <div class="row">
         <!-- Ajax Sourced Server-side -->
         <div class="card">
-          <h5 class="card-header">Bảng Danh Mục Phụ</h5>
+          <h5 class="card-header">Bảng Danh Mục</h5>
           <div class="card-datatable text-nowrap">
             <table class="datatables-ajax table">
               <thead>
@@ -29,65 +28,35 @@
                   <th>STT</th>
                   <th>ID</th>
                   <th>Tên Danh Mục</th>
-                  <th>Tên Danh Mục Phụ</th>
-                  <th>Trạng Thái</th>
+                  <th>Ngày Xóa</th>
                   <th>Hành Động</th>
                 </tr>
               </thead>
               <tbody>
-                <% if(SubCategories.length> 0) { %> <% SubCategories.forEach((subCategory,index)=> { %>
-                    <!-- get name category -->
+                <% if(categories.length> 0) { %> <% categories.forEach((category,index)=> { %>
                     <tr>
                       <td>
                         <%= index + 1 %>
                       </td>
                       <td>
-                        <%= subCategory.id %>
+                        <%= category.id %>
                       </td>
                       <td>
-                        <%= subCategory.category_id.name %>
+                        <%= category.name %>
                       </td>
                       <td>
-                        <%= subCategory.name %>
-                      </td>
-                      <td>
-                        <% if(subCategory.status==1) { %>
-                          <label class="switch">
-                            <input type="checkbox" checked class="switch-input change-status"
-                              data-id="<%= subCategory.id%>" style="width: 100%; height: 100%;" />
-                            <span class="switch-toggle-slider">
-                              <span class="switch-on">
-                                <i class="ti ti-check"></i>
-                              </span>
-                              <span class="switch-off">
-                                <i class="ti ti-x"></i>
-                              </span>
-                            </span>
-                          </label>
-                          <% } else { %>
-                            <label class="switch">
-                              <input type="checkbox" class="switch-input change-status" data-id="<%= subCategory.id%>"
-                                style="width: 100%; height: 100%;" />
-                              <span class="switch-toggle-slider">
-                                <span class="switch-on">
-                                  <i class="ti ti-check"></i>
-                                </span>
-                                <span class="switch-off">
-                                  <i class="ti ti-x"></i>
-                                </span>
-                              </span>
-                            </label>
-                            <% } %>
+                        <%= category.deletedAt.toLocaleString() %>
                       </td>
                       <td class="d-flex">
                         <!-- EDIT BUTTON -->
-                        <a href="/admin/sub-category/edit/<%= subCategory.id%>"
-                          class="btn btn-warning waves-effect waves-light"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="/admin/category/restore/<%= category.id%>"
+                          class="btn btn-warning waves-effect waves-light"><i
+                            class="fa-solid fa-rotate-left fa-fw"></i></a>
                         <!-- DELETE BUTTON -->
-                        <form action="/admin/sub-category/delete/<%= subCategory.id%>?_method=DELETE" method="post"
+                        <form action="/admin/category/deletePermanently/<%= category.id%>?_method=DELETE" method="post"
                           class="delete-item-form mx-3">
                           <button class="btn btn-danger waves-effect waves-light delete-item"><i
-                              class="fa-solid fa-trash-can"></i></button>
+                              class="fa-solid fa-infinity"></i></button>
                         </form>
                       </td>
                     </tr>
@@ -145,7 +114,7 @@
           $.ajax({
             type: "PATCH",
             dataType: "json",
-            url: '/admin/sub-category/change-status/:id?_method=PATCH'.replace(':id', id),
+            url: '/admin/category/change-status/:id?_method=PATCH'.replace(':id', id),
             success: function (data) {
               if (data.status == 'success') {
                 toastr.success(data.message, 'Thành Công');

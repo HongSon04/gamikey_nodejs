@@ -29,6 +29,7 @@ const subCategorySchema = new mongoose.Schema({
   expiredAt: {
     type: Date,
     default: null,
+    expires: 0,
   },
 });
 

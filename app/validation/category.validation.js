@@ -1,6 +1,7 @@
 const checkNotEmptyCategory = (req, res, next) => {
   const { name, status } = req.body;
   let listErrors = [];
+
   if (name == '') {
     listErrors.push('Tên Danh Mục Không Được Để Trống');
     req.flash('errors', { msg: 'Tên Danh Mục Không Được Để Trống' });

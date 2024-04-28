@@ -37,9 +37,24 @@ const updateSubCategory = async (id, data) => {
 };
 
 const deleteSubCategoryByID = async (id) => {
+  return await SubCategory.updateOne(
+    { _id: id },
+    {
+      expiredAt: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+      deletedAt: new Date(),
+    },
+  );
+};
 
-  console.log("Đã đi vào services");
-  return await SubCategory.updateOne({ _id: id }, { deletedAt: Date.now() });
+const restoreSubCategoryServices = async (id) => {
+  return await SubCategory.updateOne(
+    { _id: id },
+    { deletedAt: null, expiredAt: null },
+  );
+};
+
+const deleteForeverSubCategory = async (id) => {
+  return await SubCategory.deleteOne({ _id: id });
 };
 
 module.exports = {
@@ -49,4 +64,6 @@ module.exports = {
   storeSubCategory,
   updateSubCategory,
   deleteSubCategoryByID,
+  restoreSubCategoryServices,
+  deleteForeverSubCategory,
 };

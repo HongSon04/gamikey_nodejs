@@ -47,7 +47,25 @@ const updateBrand = async (id, data) => {
 };
 
 const deleteBrandByID = async (id) => {
-  return await Brand.updateOne({ _id: id }, { deletedAt: Date.now() });
+  return await Brand.updateOne(
+    { _id: id },
+    {
+      expiredAt: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+      deletedAt: new Date(),
+    },
+  );
+};
+
+const getAllTrashBrands = async () => {
+  return await Brand.find({ deletedAt: { $ne: null } });
+};
+
+const restoreBrandServices = async (id) => {
+  return await Brand.updateOne({ _id: id }, { deletedAt: null, expiredAt: null});
+};
+
+const deleteBrandForeverServices = async (id) => {
+  return await Brand.deleteOne({ _id: id });
 };
 
 module.exports = {
@@ -56,4 +74,7 @@ module.exports = {
   storeBrand,
   updateBrand,
   deleteBrandByID,
+  getAllTrashBrands,
+  restoreBrandServices,
+  deleteBrandForeverServices,
 };

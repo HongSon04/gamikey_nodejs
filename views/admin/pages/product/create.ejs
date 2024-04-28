@@ -29,25 +29,34 @@
                     <h5 class="card-tile mb-0">Thông Tin Sản Phẩm</h5>
                   </div>
                   <div class="card-body">
-                    <!-- NAME -->
-                    <div class="mb-3">
-                      <label class="form-label" for="name">Tên</label>
-                      <input type="text" class="form-control" id="name" placeholder="Tên Sản Phẩm" name="name"
-                        aria-label="Tên Sản Phẩm" />
+                    <div class="row">
+                      <!-- NAME -->
+                      <div class="mb-3 col-6">
+                        <label class="form-label" for="name">Tên</label>
+                        <input type="text" class="form-control" id="name" placeholder="Tên Sản Phẩm" name="name"
+                          aria-label="Tên Sản Phẩm" />
+                      </div>
+                      <!-- NAME -->
+                      <div class="mb-3 col-6">
+                        <label class="form-label" for="position">Vị Trí</label>
+                        <input type="number" class="form-control" id="position" placeholder="Vị Trí" name="position"
+                          aria-label="Vị Trí" />
+                        <code>Để Trống sẽ xuất hiện đầu tiên</code>
+                      </div>
                     </div>
                     <!-- PRICE -->
                     <div class="row">
                       <div class="col-6">
                         <div class="mb-3">
                           <label class="form-label" for="price">Giá</label>
-                          <input type="tel" class="form-control" id="price" placeholder="Giá Sản Phẩm" name="price"
+                          <input type="number" class="form-control" id="price" placeholder="Giá Sản Phẩm" name="price"
                             aria-label="Giá Sản Phẩm" />
                         </div>
                       </div>
                       <div class="col-6">
                         <div class="mb-3">
                           <label class="form-label" for="discount_price">Giá Khuyến Mãi</label>
-                          <input type="tel" class="form-control" id="discount_price" placeholder="Giá Sản Phẩm"
+                          <input type="number" class="form-control" id="discount_price" placeholder="Giá Sản Phẩm"
                             name="discount_price" aria-label="Giá Khuyến Mãi Sản Phẩm" />
                           <code>Nếu không có khuyến mãi để trống</code>
                         </div>
@@ -125,13 +134,13 @@
                           <input class="form-control" type="file" id="formFile" name="image" />
                         </div>
                         <div class="col-6 d-flex justify-content-center">
-                          <img class="image-show" src="" alt="" style="border-radius: 16px" />
+                          <img class="image-show img-fluid" src="" alt="" style="border-radius: 16px" />
                         </div>
                       </div>
                     </div>
                     <!-- STATUS -->
                     <div class="row mb-3">
-                      <h3 class="my-3" for="description">Mô Tả</h3>
+                      <h3 class="my-3" for="description">Trạng Thái</h3>
                       <select id="status" name="status" class="form-select">
                         <option value="">---Chọn---</option>
                         <option value="0">Ẩn</option>
@@ -201,7 +210,7 @@
             let html = ' ';
             html += '<option value="">---Chọn---</option>';
             sub_category.forEach((sub) => {
-              html += `<option value="${sub.id}">${sub.name}</option>`;
+              html += `<option value="${sub._id}">${sub.name}</option>`;
             });
             $('#sub_category_id').html(html);
           },
