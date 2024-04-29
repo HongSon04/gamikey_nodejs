@@ -30,8 +30,6 @@
                   <th>Ảnh</th>
                   <th>Tên Sản Phẩm</th>
                   <th>Danh Mục</th>
-                  <th>Danh Mục Phụ</th>
-                  <th>Thương Hiệu</th>
                   <th>Giá</th>
                   <th>Trạng Thái</th>
                   <th>Hành Động</th>
@@ -52,12 +50,6 @@
                       </td>
                       <td>
                         <%= product.category_id.name %>
-                      </td>
-                      <td>
-                        <%= product.sub_category_id.name %>
-                      </td>
-                      <td>
-                        <%= product.brand_id.name %>
                       </td>
                       <td>
                         <%= product.price %>
@@ -111,9 +103,8 @@
                             </button>
                             <ul class="dropdown-menu" data-popper-placement="top-start" data-popper-reference-hidden=""
                               style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(0px, -40px);">
-                              <li><a class="dropdown-item" href="/admin/product-variant/<%= product.id%>">Variants</a></li>
-                              <li><a class="dropdown-item" href="javascript:void(0);">Thêm Tài Khoản</a></li>
-
+                              <li><a class="dropdown-item" href="/admin/product-account/<%= product.id%>">Thêm Tài
+                                  Khoản</a></li>
                             </ul>
                           </div>
                         </div>

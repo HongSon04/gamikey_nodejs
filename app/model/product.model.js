@@ -9,6 +9,7 @@ mongoose.plugin(slug);
 const ProductSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    position: { type: Number, default: 0 },
     price: { type: Number, required: true },
     discount_price: { type: Number, default: 0 },
     image: { type: String, required: true },
@@ -17,7 +18,7 @@ const ProductSchema = new mongoose.Schema(
     purcharsed: { type: Number, default: 0 },
     type: {
       type: String,
-      enum: ['Tài Khoản', 'Nâng Cấp', 'Key'],
+      enum: ['Tài Khoản', 'Key'],
     },
     slug_type: {
       type: String,
@@ -28,10 +29,11 @@ const ProductSchema = new mongoose.Schema(
       ref: 'Brand',
       default: null,
     },
-    category_id: { type: String, ref: 'Category' },
+    category_id: { type: String, ref: 'Category', default: null },
     sub_category_id: {
       type: String,
       ref: 'SubCategory',
+      default: null,
     },
     description: { type: String, required: true },
     short_description: { type: String, required: true },

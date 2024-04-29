@@ -1,0 +1,144 @@
+<%- include('../../../partials/header.ejs') %>
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-0">
+      <span class="text-muted fw-light">Ecommerce /</span><span class="fw-medium"> Tài Khoản</span>
+    </h4>
+    <% let listErrors=[] %>
+      <% listErrors=errors.map(error=> error.msg) %>
+        <div class="app-ecommerce">
+          <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
+            <div class="d-flex flex-column justify-content-center">
+              <h4 class="mb-1 mt-3">Thêm <%=productType.type%>: <%=productType.name%>
+              </h4>
+            </div>
+            <div class="d-flex align-content-center flex-wrap gap-3">
+              <button class="btn btn-info waves-effect waves-light" id="addInput">Thêm Ô Nhập</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <!-- Product Information -->
+              <div class="card mb-4">
+                <form action="/admin/product-account/store/<%=product_id%>" method="POST">
+                  <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="card-tile mb-0">Thông Tin Sản Phẩm</h5>
+                    <div class="row">
+                      <div class="col-12 d-flex justify-content-end">
+                        <a href="/admin/product-account/<%=product_id%>"
+                          class="btn btn-danger waves-effect waves-light mx-3"><i class="fa-solid fa-xmark"></i> &ensp;
+                          Hủy</a>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                          <i class="fa-solid fa-floppy-disk"></i>&ensp; Thêm
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row productItems">
+                      <% if(productType.type=='Tài Khoản' ) { %>
+                        <div class="row productItem">
+                          <div class="mb-3 col-12">
+                            <label class="form-label" for="username">Tài Khoản</label>
+                            <input type="text" class="form-control" id="username" placeholder="Tài khoản"
+                              name="username" aria-label="Tên Sản Phẩm" />
+                          </div>
+                          <div class="mb-3 col-12">
+                            <label class="form-label" for="password">Mật Khẩu</label>
+                            <input type="text" class="form-control" id="password" placeholder="Mật Khẩu" name="password"
+                              aria-label="Tên Sản Phẩm" />
+                          </div>
+                        </div>
+                        <input type="hidden" name="type_account" value="account">
+                        <input type="hidden" name="product_id" value="<%=product_id%>">
+                        <% } else if(productType.type=='Key' ) { %>
+                          <div class="row productItem">
+                            <div class="mb-3 col-12">
+                              <label class="form-label" for="code">CODE</label>
+                              <input type="text" class="form-control code" id="code"
+                                placeholder="Mã CODE: ABCD-FEGH-JHKW" name="code" aria-label="Mã CODE" />
+                            </div>
+                          </div>
+                          <input type="hidden" name="type_account" value="key">
+                          <input type="hidden" name="product_id" value="<%=product_id%>">
+                          <% } %>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+  <!-- / Content -->
+  <script type="application/javascript" src="/tinymce/tinymce.min.js"></script>
+  <!-- Script element sourcing the TinyMCE configuration -->
+  <script type="application/javascript" src="/admin/js/tinymce-config.js"></script>
+  <script>
+    $(document).ready(function () {
+      let errors = '<%= listErrors %>';
+      if (errors != '') {
+        errors = errors.split(',');
+        errors.forEach((error) => {
+          toastr.error(error);
+        });
+      }
+      $('.input-daterange input').each(function () {
+        $(this).datepicker('clearDates');
+      });
+      $('.kind-product .select2').each(function () {
+        $(this).select2();
+      });
+      $('#formFile').change(function () {
+        let file = $(this)[0].files[0];
+        let reader = new FileReader();
+        reader.onload = function (e) {
+          $('.image-show').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      $('body').on('change', '#category', function () {
+        let category_id = $(this).val();
+        $.ajax({
+          url: '/admin/product/getSubCategoyByIdCategory/:id'.replace(
+            ':id',
+            category_id,
+          ),
+          type: 'GET',
+          data: {
+            category_id: category_id,
+          },
+
+          success: function (data) {
+            let sub_category = data;
+            let html = ' ';
+            html += '<option value="">---Chọn---</option>';
+            sub_category.forEach((sub) => {
+              html += `<option value="${sub._id}">${sub.name}</option>`;
+            });
+            $('#sub_category_id').html(html);
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      });
+
+      $('.productItems').on('keyup', '.code', function () {
+        var value = $(this).val();
+        var value = value.toUpperCase();
+        var value = value.replace(/[^A-Z0-9]/g, '');
+        var value = value.match(new RegExp('.{1,4}', 'g')).join('-');
+        $(this).val(value);
+      })
+      // ? Click #addInput thì thêm clone .productItem
+      $('.app-ecommerce').on('click', '#addInput', function () {
+        $('.productItem').clone().appendTo('.productItems');
+      })
+    });
+  </script>
+  <%- include('../../../partials/footer.ejs') %>

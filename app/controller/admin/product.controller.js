@@ -41,7 +41,7 @@ const create = async (req, res) => {
 
 // ? [POST] /admin/product/store
 const store = async (req, res) => {
-  const {
+  let {
     name,
     price,
     discount_price,
@@ -57,6 +57,11 @@ const store = async (req, res) => {
     end_discount,
     status,
   } = req.body;
+
+  if (position == null || position == '') {
+    const toTalProduct = await Product.countDocuments();
+    position = toTalProduct + 1;
+  }
 
   const data = {
     name,
@@ -74,14 +79,19 @@ const store = async (req, res) => {
     end_discount,
     status,
   };
-
   if (data.image == null) {
     req.flash('errors', { msg: 'Hình ảnh không được để trống' });
     return res.redirect('back');
   }
-  await storeProduct(data);
 
-  res.redirect('/admin/product');
+  try {
+    await storeProduct(data);
+    req.flash('success', 'Tạo Danh Mục Thành Công');
+    res.redirect('/admin/product');
+  } catch (error) {
+    req.flash('errors', { msg: 'Tạo Danh Mục Thất Bại' });
+    res.redirect('back');
+  }
 };
 
 // ? [GET] /admin/product/edit/:id
@@ -140,9 +150,21 @@ const update = async (req, res) => {
     status,
   };
 
-  await updateProduct(id, data);
-  req.flash('success', 'Cập Nhật Danh Mục Thành Công');
-  res.redirect('/admin/product');
+  if (data.position != null) {
+    data.position = parseInt(data.position);
+  } else {
+    const toTalProduct = await Product.countDocuments();
+    data.position = toTalProduct + 1;
+  }
+
+  try {
+    await updateProduct(id, data);
+    req.flash('success', 'Cập Nhật Danh Mục Thành Công');
+    res.redirect('/admin/product');
+  } catch (error) {
+    req.flash('errors', { msg: 'Cập Nhật Danh Mục Thất Bại' });
+    res.redirect('back');
+  }
 };
 
 // ? [DELETE] /admin/product/delete/:id

@@ -1,10 +1,11 @@
 const Product = require('../model/product.model');
 
 const getAllProducts = async () => {
-  return await Product.find({ deletedAt: null })
-    .populate('category_id', 'name')
-    .populate('sub_category_id', 'name')
-    .populate('brand_id', 'name');
+  // If Have sub_category_id then populate it
+  return await Product.find({ deletedAt: null }).populate(
+    'category_id',
+    'name',
+  );
 };
 
 const storeProduct = async (data) => {
@@ -23,13 +24,8 @@ const storeProduct = async (data) => {
     start_discount: data.start_discount,
     end_discount: data.end_discount,
     status: data.status,
+    position: data.position,
   });
-  if (data.position != null) {
-    product.position = data.position;
-  } else {
-    const toTalProduct = await Product.countDocuments();
-    product.position = toTalProduct + 1;
-  }
 
   return await product.save();
 };
@@ -66,6 +62,7 @@ const updateProduct = async (id, data) => {
           start_discount: data.start_discount,
           end_discount: data.end_discount,
           status: data.status,
+          position: data.position,
         },
       );
     }
@@ -87,6 +84,7 @@ const updateProduct = async (id, data) => {
         short_description: data.short_description,
         start_discount: data.start_discount,
         end_discount: data.end_discount,
+        position: data.position,
         status: data.status,
       },
     );
