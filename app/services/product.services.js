@@ -8,6 +8,16 @@ const getAllProducts = async () => {
   );
 };
 
+const getProductBySlug = async (slug) => {
+  return await Product.findOne({ slug: slug, status: '1' });
+};
+
+const getNearProductByCategory = async (category_id) => {
+  return await Product.find({ category_id: category_id, status: '1' })
+    .select('name image price slug purcharsed')
+    .limit(6)
+    .populate('category_id', 'name');
+};
 const storeProduct = async (data) => {
   const product = new Product({
     name: data.name,
@@ -128,4 +138,6 @@ module.exports = {
   getAllTrashProductsServices,
   restoreProductByIDServies,
   deleteProductPermanentlyServices,
+  getProductBySlug,
+  getNearProductByCategory,
 };

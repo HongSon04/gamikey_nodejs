@@ -33,3 +33,25 @@
 <script>
     var sakura = new Sakura('body');
 </script>
+
+<script>
+    $(document).ready(function () {
+        // ? Format .product_price to currency Vietnamese Dong
+        $('.product_price').each(function () {
+            var price = $(this).text();
+            price = parseInt(price);
+            var formatPrice = price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+            $(this).text(formatPrice);
+        });
+        // ? Select where have attribute limitText
+        $('[limitText]').each(function () {
+            var limit = $(this).attr('limitText');
+            var text = $(this).text().trim();
+            console.log(text);
+            if (text.length > limit) {
+                text = text.split('').slice(0, limit).join('') + '...';
+                $(this).text(text);
+            }
+        });
+    })
+</script>

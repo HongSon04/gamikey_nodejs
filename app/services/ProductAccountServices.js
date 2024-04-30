@@ -20,7 +20,7 @@ class ProductAccountServices {
       const increase = data.username.length;
       product.quantity += increase;
       await product.save();
-      await data.username.map(async (item, index) => {
+      await data.username.forEach(async (item, index) => {
         const productAccount = new ProductAccount({
           product_id: data.product_id,
           username: item,

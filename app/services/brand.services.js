@@ -1,7 +1,7 @@
 const Brand = require('../model/brand.model');
 
 const getAllBrands = async () => {
-  return await Brand.find({ deletedAt: null });
+  return await Brand.find({ deletedAt: null, status: '1' });
 };
 
 const storeBrand = async (data) => {
@@ -61,7 +61,10 @@ const getAllTrashBrands = async () => {
 };
 
 const restoreBrandServices = async (id) => {
-  return await Brand.updateOne({ _id: id }, { deletedAt: null, expiredAt: null});
+  return await Brand.updateOne(
+    { _id: id },
+    { deletedAt: null, expiredAt: null },
+  );
 };
 
 const deleteBrandForeverServices = async (id) => {

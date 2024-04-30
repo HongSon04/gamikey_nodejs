@@ -135,9 +135,19 @@
         var value = value.match(new RegExp('.{1,4}', 'g')).join('-');
         $(this).val(value);
       })
-      // ? Click #addInput thì thêm clone .productItem
+      function cloneProductItem() {
+        // ? Clone firt .productItem and append to .productItems
+        $('.productItem').clone().first().appendTo('.productItems');
+      }
+      let count = 1;
       $('.app-ecommerce').on('click', '#addInput', function () {
-        $('.productItem').clone().appendTo('.productItems');
+        if (count < 10) {
+          cloneProductItem();
+          count++;
+        } else {
+          alert('Chỉ được thêm tối đa 10 ô nhập')
+
+        }
       })
     });
   </script>
