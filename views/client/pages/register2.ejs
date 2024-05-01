@@ -9,38 +9,19 @@
                             <div class="col-second auth_body_left col-6 order-2">
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100">
                                     <div class="auth_body_left_container">
-                                        <h2>Đăng Ký</h2>
-                                        <h3>Đăng nhập với tài khoản mạng xã hội</h3>
-                                        <div class="social_login">
-                                            <a href="">
-                                                <i class="fab fa-google"></i>
-                                            </a>
-                                            <a href="">
-                                                <i class="fab fa-facebook"></i>
-                                            </a>
-                                            <a href="">
-                                                <i class="fab fa-discord"></i>
-                                            </a>
-                                            <a href="">
-                                                <i class="fab fa-steam"></i>
-                                            </a>
+                                        <h2>Chúng tôi đã gửi email xác nhận đến bạn</h2>
+                                        <div class="col-12 my-4">
+                                            <div class="input-group">
+                                                <label for="username" class="input-group-text"><i
+                                                        class="fas fa-envelope fa-fw"></i></label>
+                                                <input id="username" type="text" class="form-control"
+                                                    placeholder="Nhập Email" value="<%=email%>" disabled>
+                                            </div>
                                         </div>
-                                        <form action="/register2" class="form_auth">
-                                            <div class="col-12 my-4">
-                                                <h3 class="mb-3">Đăng ký bằng email để nhận được email xác minh.</h3>
-                                                <div class="input-group">
-                                                    <label for="username" class="input-group-text"><i
-                                                            class="fas fa-envelope fa-fw"></i></label>
-                                                    <input id="username" type="text" class="form-control"
-                                                        placeholder="Nhập Email">
-                                                </div>
-                                            </div>
-                                            <!-- BUTTON SUBMIT LOGIN -->
-                                            <div class="col-12">
-                                                <button type="submit" class="btn btn-primary create-btn">Gửi Thư Xác
-                                                    Minh</button>
-                                            </div>
-                                        </form>
+                                        <!-- BUTTON SUBMIT LOGIN -->
+                                        <div class="col-12">
+                                            <a href="https://mail.google.com/mail/u/0/" type="submit" class="btn btn-primary create-btn">Kiểm Tra Email</a>
+                                        </div>
                                         <!-- FORGET PASSWORD -->
                                         <div class="forget_password my-2">
                                             <a href="index.html">Quay trở lại trang chủ</a>
@@ -55,11 +36,11 @@
                                         <div class="step_to_regis">
                                             <div class="step_to_regis_container">
                                                 <div class="step_to_regis_item d-flex">
-                                                    <p class="active">1</p>
+                                                    <p>1</p>
                                                     <span>Đăng ký bằng email để nhận được email xác minh.</span>
                                                 </div>
                                                 <div class="step_to_regis_item d-flex">
-                                                    <p>2</p>
+                                                    <p class="active">2</p>
                                                     <span>Nhấp vào liên kết xác minh trong email đã đăng ký.</span>
                                                 </div>
                                                 <div class="step_to_regis_item d-flex">

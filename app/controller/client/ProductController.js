@@ -9,6 +9,7 @@ const {
 } = require('../../services/product.services');
 
 class ProductController {
+  // ? Constructor checkuser login và giải mã token
   async index(req, res) {
     const { slug } = req.params;
     const product = await getProductBySlug(slug);

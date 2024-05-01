@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const ejs = require('ejs');
+const jwt = require('jsonwebtoken');
 const checkConnect = require('./config/database');
 const adminRouter = require('./routes/admin/admin.routes');
 const clientRouter = require('./routes/client/client.routes');
