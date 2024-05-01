@@ -30,7 +30,6 @@ $(document).ready(function () {
   }
   // ? MINI CART
   $('#view_mini_cart').on('click', handleMiniCart);
-  $('#btn_addToCart').on('click', handleMiniCart);
 
   $('.header_vertical_menu_button').on('click', function () {
     turnOnOverlay();

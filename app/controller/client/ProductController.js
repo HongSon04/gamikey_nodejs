@@ -24,6 +24,7 @@ class ProductController {
     const getCategories = await getAllCategories();
     // ? Get ALL Brand
     const getBrands = await getAllBrands();
+    const userInfo = req.headers.authorization;
     res.render('client/pages/product_detail/index.ejs', {
       product,
       nextProducts,
@@ -31,6 +32,7 @@ class ProductController {
       getCategories,
       getBrands,
       slug,
+      userInfo,
     });
   }
 
@@ -64,6 +66,7 @@ class ProductController {
     const getNewProduct = await Product.find({})
       .sort({ createdAt: -1 })
       .limit(5);
+    const userInfo = req.headers.authorization;
     res.render('client/pages/product/index.ejs', {
       products,
       getBestProductPurchased,
@@ -71,6 +74,7 @@ class ProductController {
       getBrands,
       getNewProduct,
       slug,
+      userInfo,
     });
   }
 
@@ -102,6 +106,7 @@ class ProductController {
     const getNewProduct = await Product.find({})
       .sort({ createdAt: -1 })
       .limit(5);
+    const userInfo = req.headers.authorization;
     res.render('client/pages/product/index.ejs', {
       products,
       getBestProductPurchased,
@@ -109,6 +114,7 @@ class ProductController {
       getBrands,
       getNewProduct,
       slug,
+      userInfo,
     });
   }
 
@@ -131,6 +137,7 @@ class ProductController {
     const getNewProduct = await Product.find({})
       .sort({ createdAt: -1 })
       .limit(5);
+    const userInfo = req.headers.authorization;
     res.render('client/pages/product/index.ejs', {
       products,
       getBestProductPurchased,
@@ -138,6 +145,7 @@ class ProductController {
       getBrands,
       getNewProduct,
       slug: 'search',
+      userInfo,
     });
   }
 

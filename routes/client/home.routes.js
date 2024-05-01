@@ -1,10 +1,11 @@
 const express = require('express');
 const homeRouter = express.Router();
 const HomeController = require('../../app/controller/client/home.controller');
+const { decodeJwt } = require('../../app/middleware/auth');
 // ? [GET] /
-homeRouter.get('/', HomeController.index);
+homeRouter.get('/', decodeJwt, HomeController.index);
 // ? [GET] /home
-homeRouter.get('/home', HomeController.index);
+homeRouter.get('/home', decodeJwt, HomeController.index);
 
 // ? [GET] /login
 homeRouter.get('/login', HomeController.login);
@@ -26,5 +27,8 @@ homeRouter.post('/info-register/:token', HomeController.infoRegister);
 
 // ? [GET] /Check-Email
 homeRouter.get('/check-email', HomeController.checkEmail);
+
+// ? [GET] /logout
+homeRouter.get('/logout', HomeController.logout);
 
 module.exports = homeRouter;

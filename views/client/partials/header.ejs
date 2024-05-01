@@ -324,41 +324,44 @@
                     <div class="col-12 header-nav-actions_items d-flex align-items-center">
                         <div class="col-6 header_btn_actions mx-2">
                             <!-- HEADER USER LOGIN -->
-                            <% if(userInfo != null) {%>
-                            <div class="header_btn_actions_items">
-                                <div class="header_action_king">
-                                    <button
-                                        class="d-flex justify-content-center align-items-center header_actionBtn_king"
-                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <li class="me-3 header_action_king_icon"><i class="fas fa-user"></i></li>
-                                        <li class="header_action_king_text"><span>Tài Khoản</span></li>
-                                    </button>
-                                    <li class="dropdown-menu">
-                                        <ul class="header_action_queen_items">
-                                            <div class="header_action_queen_item">
-                                                <li>Xin Chào: <%=userInfo%></li>
-                                                <li><a href="">Tài Khoản</a></li>
-                                                <li><a href="">Đơn Hàng</a></li>
-                                                <form method="POST" action="">
-                                                    <li><a href="">Đăng Xuất</a></li>
-                                                </form>
-                                            </div>
-                                        </ul>
-                                    </li>
+                            <% if(userInfo !=null) {%>
+                                <div class="header_btn_actions_items">
+                                    <div class="header_action_king">
+                                        <button
+                                            class="d-flex justify-content-center align-items-center header_actionBtn_king"
+                                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <li class="me-3 header_action_king_icon"><i class="fas fa-user"></i></li>
+                                            <li class="header_action_king_text"><span>Tài Khoản</span></li>
+                                        </button>
+                                        <li class="dropdown-menu">
+                                            <ul class="header_action_queen_items">
+                                                <div class="header_action_queen_item">
+                                                    <li>Xin Chào: <%=userInfo.name !=null ? userInfo.name :
+                                                            userInfo.email%>
+                                                    </li>
+                                                    <li><a href="">Tài Khoản</a></li>
+                                                    <li><a href="">Đơn Hàng</a></li>
+                                                    <form method="get" action="/logout" id="logoutForm">
+                                                        <li><a href="/logout" id="logoutBTN">Đăng Xuất</a></li>
+                                                    </form>
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </div>
                                 </div>
-                            </div>
-                            <% } else { %>
-                            <!-- GUEST  -->
-                            <a class="header_btn_actions_items" href="/login">
-                                <ul class="header_action_king">
-                                    <button
-                                        class="d-flex justify-content-center align-items-center header_actionBtn_king loginBtn">
-                                        <li class="me-3 header_action_king_icon"><i class="fas fa-user"></i></li>
-                                        <li class="header_action_king_text"><span>Đăng Nhập</span></li>
-                                    </button>
-                                </ul>
-                            </a>
-                            <% } %>
+                                <% } else { %>
+                                    <!-- GUEST  -->
+                                    <a class="header_btn_actions_items" href="/login">
+                                        <ul class="header_action_king">
+                                            <button
+                                                class="d-flex justify-content-center align-items-center header_actionBtn_king loginBtn">
+                                                <li class="me-3 header_action_king_icon"><i class="fas fa-user"></i>
+                                                </li>
+                                                <li class="header_action_king_text"><span>Đăng Nhập</span></li>
+                                            </button>
+                                        </ul>
+                                    </a>
+                                    <% } %>
                         </div>
                         <div class="col-6 header_btn_actions mx-2">
                             <div id="view_mini_cart" class="header_btn_actions_items">
@@ -516,3 +519,4 @@
             </div>
         </div>
     </header-mobile>
+   

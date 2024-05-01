@@ -38,6 +38,10 @@
 
 <script>
     $(document).ready(function () {
+        $('body').on('click', '#logoutBTN', function (e) {
+            e.preventDefault();
+            $('#logoutForm').submit();
+        })
         // ? Format .product_price to currency Vietnamese Dong
         $('.product_price').each(function () {
             var price = $(this).text();
@@ -54,6 +58,7 @@
                 $(this).text(text);
             }
         });
-        
+
     })
+
 </script>

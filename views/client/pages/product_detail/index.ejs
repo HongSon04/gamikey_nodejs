@@ -89,7 +89,12 @@
                                                 class="fas fa-wallet fa-fw"></i>Mua
                                             Ngay</button>
                                     </form>
-                                    <form action="" method="get">
+                                    <form action="/addToCart" method="get">
+                                        <input type="hidden" name="id" value="<%=product.id%>">
+                                        <input type="hidden" name="name" value="<%=product.name%>">
+                                        <input type="hidden" name="price" value="<%=product.price%>">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <input type="hidden" name="type" value="<%=product.type%>">
                                         <button type="submit" id="btn_addToCart" class="shadow-lg"><i
                                                 class="fas fa-shopping-cart"></i>Thêm Giỏ Hàng</button>
                                     </form>
@@ -401,27 +406,34 @@
                                     <a href="/product/<%=item.slug%>" class="section-product-anchor">
                                         <div class="col-12 d-xl-flex border shadow-lg">
                                             <div class="col-xl-6 section-product-left">
-                                                <img loading="lazy" class="section-product-img"
-                                                    src="<%=item.image%>" alt="">
+                                                <img loading="lazy" class="section-product-img" src="<%=item.image%>"
+                                                    alt="">
                                             </div>
                                             <div class="col-xl-6 section-product-right p-2">
                                                 <div class="col-12 section-product-name">
-                                                    <h3 class="product_name"><%=item.name%></h3>
+                                                    <h3 class="product_name">
+                                                        <%=item.name%>
+                                                    </h3>
                                                 </div>
                                                 <div
                                                     class="col-12 section-product-middle d-flex py-2 align-items-center">
                                                     <div
                                                         class="col-6 section-product-categories d-flex align-items-center">
-                                                        <p><%=item.category_id.name%></p>
+                                                        <p>
+                                                            <%=item.category_id.name%>
+                                                        </p>
                                                     </div>
                                                     <div class="col-6 section-product-price d-flex justify-content-end">
                                                         <i class="fas fa-shopping-cart fa-fw"></i>
-                                                        <h4 class="product_qty_purchared"><%=item.purcharsed%></h4>
+                                                        <h4 class="product_qty_purchared">
+                                                            <%=item.purcharsed%>
+                                                        </h4>
                                                     </div>
                                                     <div class="line-separation"></div>
                                                 </div>
                                                 <div class="col-12">
-                                                    <h4 class="product_price d-flex justify-content-center"><%=item.price%>
+                                                    <h4 class="product_price d-flex justify-content-center">
+                                                        <%=item.price%>
                                                     </h4>
                                                 </div>
                                             </div>
@@ -440,11 +452,49 @@
     <%- include('../../partials/footer'); -%>
         <script>
             $(document).ready(function () {
+                // ? Format .product_price to currency Vietnamese Dong
                 $('#priceProductDetail').each(function () {
                     var price = $(this).text();
                     price = parseInt(price);
                     var formatPrice = price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
                     $(this).text(formatPrice);
+                });
+                // ? Show mini cart when click on button add to cart
+                function handleMiniCart() {
+                    $('.mini_cart').addClass('active');
+                    $('.overlay').addClass('active');
+                    // ? turn off overlay and minicart when click on overlay
+                    $('.overlay').on('click', function () {
+                        $('.mini_cart').removeClass('active');
+                        $('.overlay').removeClass('active');
+                    });
+                    // ? turn off overlay and minicart when click on close button
+                    $('.close_mini_cart').on('click', function () {
+                        $('.mini_cart').removeClass('active');
+                        $('.overlay').addClass('active');
+                    });
+                }
+                $('#btn_addToCart').on('click', function (e) {
+                    e.preventDefault();
+                    let data = $(this).closest('form').serialize();
+                    $.ajax({
+                        url: '/addToCart',
+                        type: 'get',
+                        data: data,
+                        beforeSend: function () {
+                            $('#btn_addToCart i').removeClass('fa-wallet').addClass('fa-spinner');
+                        },
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(xhr.responseText);
+                        },
+                        complete: function () {
+                            $('#btn_addToCart i').removeClass('fa-spinner').addClass('fa-wallet');
+                            handleMiniCart();
+                        }
+                    });
                 });
             })
         </script>

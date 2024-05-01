@@ -35,8 +35,7 @@ class HomeController {
     const getCategories = await getAllCategories();
     // ? Get ALL Brand
     const getBrands = await getAllBrands();
-    const userInfo = req.cookies.token  ;
-    console.log(userInfo);
+    const userInfo = req.headers.authorization;
     res.render('client/pages/home/home.ejs', {
       getBestProductPosition,
       getBestProductPurchased,
@@ -52,7 +51,6 @@ class HomeController {
   // ? [GET] /login
   login(req, res) {
     // ? Check User đã đăng nhập chưa
-    console.log(req.cookies.token);
     if (req.cookies.token) {
       return res.redirect('/');
     } else {
@@ -82,7 +80,11 @@ class HomeController {
             ),
           };
           res.cookie('token', token, options);
-          return res.redirect('/');
+          if (user.role === 'admin') {
+            return res.redirect('/admin/dashboard');
+          } else {
+            return res.redirect('/');
+          }
         }
       }
     }
@@ -101,31 +103,37 @@ class HomeController {
   // ? [post] /send-verify-email
   async sendVerifyEmail(req, res) {
     const email = req.body.email;
-    if (!email && email === '') {
+    // ? Check Isset Email
+    const issetEmail = await userModel.findOne({ email });
+    if (issetEmail) {
       return res.redirect('/register');
     } else {
-      const token = randomNumber(8);
+      if (!email && email === '') {
+        return res.redirect('/register');
+      } else {
+        const token = randomNumber(8);
 
-      const userToken = new user_tokenModel();
-      userToken.user_email = email;
-      userToken.token = token;
-      userToken.type = 'verify-email';
-      await userToken.save();
+        const userToken = new user_tokenModel();
+        userToken.user_email = email;
+        userToken.token = token;
+        userToken.type = 'verify-email';
+        await userToken.save();
 
-      // ? Lưu Email vào cookies và hủy sau 5 phút
-      res.cookie('email_verify', email, {
-        maxAge: 5 * 60 * 1000,
-        httpOnly: true,
-      });
+        // ? Lưu Email vào cookies và hủy sau 5 phút
+        res.cookie('email_verify', email, {
+          maxAge: 5 * 60 * 1000,
+          httpOnly: true,
+        });
 
-      //? Send mail
-      const subject = 'Verify Email';
-      const html = await ejs.renderFile(`views/email/verify-email.ejs`, {
-        email,
-        token,
-      });
-      await sendMailVerify(email, subject, html);
-      return res.redirect('/check-email');
+        //? Send mail
+        const subject = 'Verify Email';
+        const html = await ejs.renderFile(`views/email/verify-email.ejs`, {
+          email,
+          token,
+        });
+        await sendMailVerify(email, subject, html);
+        return res.redirect('/check-email');
+      }
     }
   }
 
@@ -225,6 +233,12 @@ class HomeController {
     });
     await sendMailVerify(email, subject, html);
     res.send('Send mail success');
+  }
+
+  // ? [GET] /logout
+  logout(req, res) {
+    res.clearCookie('token');
+    return res.redirect('/');
   }
 }
 
