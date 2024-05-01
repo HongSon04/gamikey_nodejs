@@ -157,9 +157,9 @@
                 <!-- ************************* Header SEARCH FORM ************************* -->
                 <div class="nav_header_search col-6 d-flex align-items-center pe-5">
                     <div class="header_search">
-                        <form action="" method="get">
+                        <form action="/productSearch" method="get">
                             <div class="header_search_form">
-                                <input id="searchproduct" type="text" placeholder="Tìm kiếm sản phẩm...">
+                                <input id="searchproduct" type="text" placeholder="Tìm kiếm sản phẩm..." name="search">
                                 <button type="submit" value="Tìm Kiếm"><i class="fas fa-search"></i></button>
                             </div>
                         </form>
@@ -462,11 +462,15 @@
                                 </ul>
                             </div>
                         </li>
+
                         <% getBrands.forEach((brand)=> { %>
-                            <li class="header_vertical_menu_item header_vertical_menu_item_brand mx-4">
+                            <li
+                                class="header_vertical_menu_item header_vertical_menu_item_brand mx-4 <%= brand.slug==slug ? 'active' : '' %>">
                                 <a href="/brand/<%=brand.slug%>">
                                     <img loading="lazy" src="<%=brand.image%>" alt="<%=brand.slug%>">
-                                    <h5 class="header_vertical_menu_brand_title"><%=brand.name%></h5>
+                                    <h5 class="header_vertical_menu_brand_title">
+                                        <%=brand.name%>
+                                    </h5>
                                 </a>
                             </li>
                             <% }) %>
@@ -497,156 +501,6 @@
                         </form>
                         <!-- ************************* Header SEARCH ITEMS ************************* -->
                         <div class="header_search_items overflow-y-scroll">
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="header_search_item">
-                                <a href="">
-                                    <div class="col-2">
-                                        <img class="header_search_item_img"
-                                            src="client/images/Canva-Education-510x510.png.webp" alt="">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="header_search_item_name">Tài Khoản Canva Education Vĩnh Viễn</h4>
-
-                                    </div>
-                                    <div class="col-2">
-                                        <h5 class="header_search_item_price">99.000 đ</h5>
-                                    </div>
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -47,7 +47,6 @@
         $('[limitText]').each(function () {
             var limit = $(this).attr('limitText');
             var text = $(this).text().trim();
-            console.log(text);
             if (text.length > limit) {
                 text = text.split('').slice(0, limit).join('') + '...';
                 $(this).text(text);

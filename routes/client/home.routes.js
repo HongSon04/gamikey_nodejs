@@ -12,4 +12,7 @@ homeRouter.get('/login', HomeController.login);
 // ? [GET] /register
 homeRouter.get('/register', HomeController.register);
 
+// ? [GET] /send-mail
+homeRouter.get('/send-mail', HomeController.sendMail);
+
 module.exports = homeRouter;

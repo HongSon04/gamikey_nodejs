@@ -1,6 +1,8 @@
+const sendMailVerify = require('../../helper/send-mail');
 const Product = require('../../model/product.model');
 const { getAllBrands } = require('../../services/brand.services');
 const { getAllCategories } = require('../../services/category.services');
+const ejs = require('ejs');
 
 class HomeController {
   // ? [GET] /index
@@ -35,6 +37,7 @@ class HomeController {
       getProductKey,
       getCategories,
       getBrands,
+      slug: 'home',
     });
   }
 
@@ -46,6 +49,19 @@ class HomeController {
   // ? [GET] /register
   register(req, res) {
     res.render('client/pages/register.ejs');
+  }
+
+  // ? [GET] /send-mail
+  async sendMail(req, res) {
+    const email = 'user123@gmail.com';
+    const subject = 'Hello';
+    const token = '123456';
+    const html = await ejs.renderFile(`views/email/verify-email.ejs`, {
+      email,
+      token,
+    });
+    await sendMailVerify(email, subject, html);
+    res.send('Send mail success');
   }
 }
 

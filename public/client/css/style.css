@@ -558,6 +558,10 @@ header .header-wrapper .bottom_header .header-bottom-nav .dropdown-menu .menu-li
     transition: .5s
 }
 
+.header-bottom-nav .header_vertical_menu_items .header_vertical_menu_item_brand.active .header_vertical_menu_brand_title {
+    color: #f37100
+}
+
 .box small,
 .category-page-title_text .category-page-title_text_items .category-page-title_text_items_left .breadcrumbtitle .breadcrumb-item.active a,
 .category-page-title_text .category-page-title_text_items .category-page-title_text_items_left .breadcrumbtitle .breadcrumb-item:hover a,
@@ -1150,7 +1154,12 @@ footer {
 .section-product__items .section-product__items_left .categories_product_items .categories_list_items .categories_list .category_list {
     border-bottom: 1px solid #e5e5e5;
     padding: 5px 10px;
-    margin: 5px 0
+    margin: 5px 0;
+    color: black;
+}
+
+.section-product__items .section-product__items_left .categories_product_items .categories_list_items .categories_list .category_list.active a {
+    color: #f37100 !important;
 }
 
 .section-product__items .section-product__items_left .categories_product_items .categories_list_items .categories_list .category_list:last-child {
@@ -1555,6 +1564,7 @@ footer {
     font-weight: 500;
     cursor: pointer
 }
+
 .comment_from_customers_container .comment_from_customers_items .comment_from_customers_item .info_customers .form_reply_customers {
     display: none;
 }
