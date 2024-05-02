@@ -43,12 +43,16 @@
             $('#logoutForm').submit();
         })
         // ? Format .product_price to currency Vietnamese Dong
-        $('.product_price').each(function () {
-            var price = $(this).text();
-            price = parseInt(price);
-            var formatPrice = price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
-            $(this).text(formatPrice);
-        });
+        function formarPrice(attr) {
+            $(attr).each(function () {
+                var price = $(this).text();
+                price = parseInt(price);
+                var formatPrice = price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+                $(this).text(formatPrice);
+            });
+        }
+        formarPrice('.product_price');
+        formarPrice('#priceProductDetail');
         // ? Select where have attribute limitText
         $('[limitText]').each(function () {
             var limit = $(this).attr('limitText');
@@ -59,6 +63,135 @@
             }
         });
 
+        // ? Show mini cart when click on button add to cart
+        function handleMiniCart() {
+            $('.mini_cart').addClass('active');
+            $('.overlay').addClass('active');
+            // ? turn off overlay and minicart when click on overlay
+            $('.overlay').on('click', function () {
+                $('.mini_cart').removeClass('active');
+                $('.overlay').removeClass('active');
+            });
+            // ? turn off overlay and minicart when click on close button
+            $('.close_mini_cart').on('click', function () {
+                $('.mini_cart').removeClass('active');
+                $('.overlay').addClass('active');
+            });
+        }
+
+        renderMiniCart(null, null);
+        // ? Render mini cart
+        function renderMiniCart(resData, resTotal) {
+            if (resData != null && resTotal != null) {
+                let html = ' ';
+                $('.mini_cart_subtotal').text('0');
+                $('.mini_cart_wrapper').html(' ');
+                resData.forEach(item => {
+                    html += `
+                    <li>
+                        <div class="mini_cart_img">
+                            <a href="/product/${item.slug}">
+                                <img src="${item.image}" alt="">
+                            </a>
+                            <a class="mini_cart_mini_icon_remove_product" href="/removeMiniCart/${item.id}">
+                                <i class="fas fa-minus-circle" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <div class="mini_cart_text">
+                            <a class="mini_cart_title_anchor" href="">${item.name}</a>
+                            <p class="mini_cart_price">${item.price}</p>
+                            <small class="mini_cart_qty">Số Lượng: ${item.quantity}</small>
+                        </div>
+                    </li>`;
+
+                });
+                $('.mini_cart_wrapper').html(html);
+                $('.mini_cart_subtotal').text(resTotal);
+                formarPrice('.mini_cart_price');
+                formarPrice('.mini_cart_subtotal');
+            } else {
+                $('.mini_cart_wrapper').html(' ');
+                $('.mini_cart_subtotal').text('0');
+                let html = ' ';
+                $.ajax({
+                    url: '/getMiniCart',
+                    type: 'get',
+                    success: function (response) {
+                        if (response.data.length > 0) {
+                            response.data.forEach(item => {
+                                html += `
+                           <li>
+                                <div class="mini_cart_img">
+                                    <a href="/product/${item.slug}">
+                                        <img src="${item.image}" alt="">
+                                    </a>
+                                    <a class="mini_cart_mini_icon_remove_product" href="/removeMiniCart/${item.id}">
+                                        <i class="fas fa-minus-circle" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div class="mini_cart_text">
+                                    <a class="mini_cart_title_anchor" href="">${item.name}</a>
+                                    <p class="mini_cart_price">${item.price}</p>
+                                    <small class="mini_cart_qty">Số Lượng: ${item.quantity}</small>
+                                </div>
+                            </li>`;
+                            });
+                            $('.mini_cart_wrapper').html(html);
+                            $('.mini_cart_subtotal').text(response.total);
+                            formarPrice('.mini_cart_price');
+                            formarPrice('.mini_cart_subtotal');
+                        } else {
+                            $('.mini_cart_wrapper').html('<h6 class="text-center my-3">Không có sản phẩm nào trong giỏ hàng</h6>');
+                            $('.mini_cart_subtotal').text('0');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+
+
+        }
+        // ? Add to cart
+        $('#btn_addToCart').on('click', function (e) {
+            e.preventDefault();
+            let data = $(this).closest('form').serialize();
+            $.ajax({
+                url: '/addToCart',
+                type: 'get',
+                data: data,
+                beforeSend: function () {
+                    $('#btn_addToCart i').removeClass('fa-wallet').addClass('fa-spinner');
+                },
+                success: function (response) {
+                    renderMiniCart(response.data, response.total, response.checked);
+                },
+                error: function (xhr, status, error) {
+                },
+                complete: function () {
+                    $('#btn_addToCart i').removeClass('fa-spinner').addClass('fa-wallet');
+                    handleMiniCart();
+                }
+            });
+
+        });
+
+        // ? Delete product in mini cart
+        $('body').on('click', '.mini_cart_mini_icon_remove_product', function (e) {
+            e.preventDefault();
+            let url = $(this).attr('href');
+            $.ajax({
+                url: url,
+                type: 'get',
+                success: function (response) {
+                    renderMiniCart(response.data, response.total);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
     })
 
 </script>
