@@ -83,4 +83,15 @@
             </div>
         </div>
     </main>
+    
     <%- include('../layouts/resources/javascript.ejs'); -%>
+    <script>
+        let success = '<%= success %>';
+        if (success != '') {
+            toastr.success(success, 'Thành Công');
+        }
+        let errors = '<%= errors %>';
+        if (errors != '') {
+            toastr.error(errors, 'Lỗi');
+        }
+    </script>

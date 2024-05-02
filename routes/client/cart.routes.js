@@ -12,4 +12,13 @@ CartRouter.get('/getMiniCart', CartController.getCart);
 // ? [GET] /removeMiniCart
 CartRouter.get('/removeMiniCart/:id', CartController.deleteItemCart);
 
+// ? [GET] /decreaseQty
+CartRouter.get('/decreaseQty', CartController.decreaseQty);
+
+// ? [GET] /increaseQty
+CartRouter.get('/increaseQty', CartController.increaseQty);
+
+// ? [GET] /removeAllCart
+CartRouter.get('/removeAllCart', CartController.removeAllCart);
+
 module.exports = CartRouter;

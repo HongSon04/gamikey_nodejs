@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken');
 const checkConnect = require('./config/database');
 const adminRouter = require('./routes/admin/admin.routes');
 const clientRouter = require('./routes/client/client.routes');
+const { decodeJwt, isAdmin, isLogin } = require('./app/middleware/auth');
 
 // ? Config
 const app = express();
@@ -22,7 +23,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(`${__dirname}/public`));
 // ? Flash Messages
 app.use(cookieParser('keyboard cat'));
-app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(
+  session({
+    cookie: { maxAge: process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000 },
+  }),
+); //? 6h
 app.use(flash());
 
 // ? MEthod Override
@@ -46,7 +51,7 @@ checkConnect();
  */
 // ? Routers
 
-app.use('/admin', adminRouter);
+app.use('/admin', decodeJwt, isLogin, isAdmin, adminRouter);
 app.use('/', clientRouter);
 
 app.listen(port, () => {

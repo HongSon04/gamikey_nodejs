@@ -24,6 +24,8 @@ class CartController {
       userInfo,
       slug: 'cart',
       carts,
+      success: req.flash('success'),
+      errors: req.flash('errors'),
     });
   }
 
@@ -92,6 +94,62 @@ class CartController {
     });
   }
 
+  // ? [GET] /decreaseQty
+  decreaseQty(req, res) {
+    const { id } = req.query;
+    let carts = req.session.cart;
+
+    carts.forEach((cart) => {
+      if (cart.id == id) {
+        if (cart.quantity > 1) {
+          cart.quantity -= 1;
+          cart.totalPrice = cart.quantity * cart.price;
+        }
+      }
+    });
+
+    let total = 0;
+    carts.forEach((cart) => {
+      total += cart.totalPrice;
+    });
+
+    req.session.cart = carts;
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Giảm số lượng sản phẩm thành công!',
+      data: carts,
+      total: total,
+    });
+  }
+
+  // ? [GET] /increaseQty
+  increaseQty(req, res) {
+    const { id } = req.query;
+    let carts = req.session.cart;
+
+    carts.forEach((cart) => {
+      if (cart.id == id) {
+        cart.quantity += 1;
+        cart.totalPrice = cart.quantity * cart.price;
+      }
+    });
+
+    let total = 0;
+    carts.forEach((cart) => {
+      total += cart.totalPrice;
+    });
+
+    req.session.cart = carts;
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Tăng số lượng sản phẩm thành công!',
+      data: carts,
+      total: total,
+    });
+  }
+
   // ? [GET] /deleteItemCart
   deleteItemCart(req, res) {
     const { id } = req.params;
@@ -114,6 +172,15 @@ class CartController {
       message: 'Xóa sản phẩm khỏi giỏ hàng thành công!',
       data: carts,
       total: total,
+    });
+  }
+
+  // ? [GET] /removeAllCart
+  removeAllCart(req, res) {
+    req.session.cart = [];
+    res.status(200).json({
+      status: 'success',
+      message: 'Xóa toàn bộ sản phẩm khỏi giỏ hàng thành công!',
     });
   }
 }

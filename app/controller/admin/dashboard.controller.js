@@ -4,6 +4,7 @@ class DashboardController {
     res.render('admin/pages/dashboard/dashboard.ejs', {
       pageTitle: 'Bảng Điều Khiển',
       route: 'dashboard',
+      success: req.flash('success'),
     });
   }
 }

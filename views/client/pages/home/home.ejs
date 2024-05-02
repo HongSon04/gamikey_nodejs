@@ -1,25 +1,31 @@
 <!-- INCLUDE HEADER -->
 <%- include('../../partials/header'); -%>
 
-<!-- Main content -->
-<!-- ************************* Main ************************* -->
-<main class="pt-5">
-  <section class="container">
-    <!-- ************************* BANNER ************************* -->
-    <%- include('./sections/topBanner'); -%>
+  <!-- Main content -->
+  <!-- ************************* Main ************************* -->
+  <main class="pt-5">
+    <section class="container">
+      <!-- ************************* BANNER ************************* -->
+      <%- include('./sections/topBanner'); -%>
 
-    <!-- ************************* HOT PRODUCT ************************* -->
-    <%- include('./sections/hotProduct'); -%>
+        <!-- ************************* HOT PRODUCT ************************* -->
+        <%- include('./sections/hotProduct'); -%>
 
-    <!-- ************************* CONTENT ************************* -->
-    <%- include('./sections/content'); -%>
+          <!-- ************************* CONTENT ************************* -->
+          <%- include('./sections/content'); -%>
 
-    <!-- ************************* NEW PRODUCT ************************* -->
-    <%- include('./sections/newProduct'); -%>
+            <!-- ************************* NEW PRODUCT ************************* -->
+            <%- include('./sections/newProduct'); -%>
 
-    <!-- ************************* STATISTICS ************************* -->
-    <%- include('./sections/statistics'); -%>
-  </section>
-</main>
+              <!-- ************************* STATISTICS ************************* -->
+              <%- include('./sections/statistics'); -%>
+    </section>
+  </main>
 
-<%- include('../../partials/footer'); -%>
+  <%- include('../../partials/footer'); -%>
+    <script>
+      let success = '<%= success %>';
+      if (success) {
+        toastr.success(success);
+      }
+    </script>

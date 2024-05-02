@@ -107,8 +107,10 @@
                 });
                 $('.mini_cart_wrapper').html(html);
                 $('.mini_cart_subtotal').text(resTotal);
+                $('.sub_total').text(resTotal);
                 formarPrice('.mini_cart_price');
                 formarPrice('.mini_cart_subtotal');
+                formarPrice('.sub_total');
             } else {
                 $('.mini_cart_wrapper').html(' ');
                 $('.mini_cart_subtotal').text('0');
@@ -138,8 +140,10 @@
                             });
                             $('.mini_cart_wrapper').html(html);
                             $('.mini_cart_subtotal').text(response.total);
+                            $('.sub_total').text(response.total);
                             formarPrice('.mini_cart_price');
                             formarPrice('.mini_cart_subtotal');
+                            formarPrice('.sub_total');
                         } else {
                             $('.mini_cart_wrapper').html('<h6 class="text-center my-3">Không có sản phẩm nào trong giỏ hàng</h6>');
                             $('.mini_cart_subtotal').text('0');
@@ -150,7 +154,6 @@
                     }
                 });
             }
-
 
         }
         // ? Add to cart
@@ -165,9 +168,11 @@
                     $('#btn_addToCart i').removeClass('fa-wallet').addClass('fa-spinner');
                 },
                 success: function (response) {
+                    toastr.success(response.message, 'Thành Công');
                     renderMiniCart(response.data, response.total, response.checked);
                 },
                 error: function (xhr, status, error) {
+                    toastr.error('Đã xảy ra lỗi, vui lòng thử lại sau', 'Thất Bại');
                 },
                 complete: function () {
                     $('#btn_addToCart i').removeClass('fa-spinner').addClass('fa-wallet');
@@ -185,13 +190,104 @@
                 url: url,
                 type: 'get',
                 success: function (response) {
+                    toastr.success(response.message, 'Thành Công');
                     renderMiniCart(response.data, response.total);
+
+                },
+                error: function (xhr, status, error) {
+                    toastr.error('Đã xảy ra lỗi, vui lòng thử lại sau', 'Thất Bại');
+                }
+            });
+        });
+        // ? Delete product in main cart
+        $('body').on('click', '.cart_container_item_remove', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            $.ajax({
+                url: '/removeMiniCart/id'.replace('id', id),
+                type: 'get',
+                data: { id: id },
+                success: function (response) {
+                    renderMiniCart(response.data, response.total);
+                    toastr.success(response.message, 'Thành Công');
+                    window.location.reload();
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr.responseText);
                 }
             });
         });
+        // ? Decrease quantity product in main cart
+        $('.cart_product_qty').on('click', '.decreQty', function () {
+            let id = $(this).data('id');
+            // Get quantity of cart_container_item_qty
+            let quantity = $(this).closest('.cart_product_qty').find('.cart_container_item_qty').val() - 1;
+            // ? sET quantity to input
+            $(this).closest('.cart_product_qty').find('.cart_container_item_qty').val(quantity);
+            if (quantity < 1) {
+                quantity = 1;
+                $(this).closest('.cart_product_qty').find('.cart_container_item_qty').val(quantity);
+                toastr.error('Số lượng sản phẩm không thể nhỏ hơn 1', 'Thất Bại');
+                return;
+            }
+            $.ajax({
+                url: '/decreaseQty',
+                type: 'get',
+                data: { id: id, quantity: quantity },
+                success: function (response) {
+                    renderMiniCart(response.data, response.total);
+                    toastr.success(response.message, 'Thành Công');
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        })
+        // ? Increase quantity product in main cart
+        $('.cart_product_qty').on('click', '.increQty', function () {
+            let id = $(this).data('id');
+            // Get quantity of cart_container_item_qty
+            let quantity = parseInt($(this).closest('.cart_product_qty').find('.cart_container_item_qty').val()) + 1;
+            // ? sET quantity to input
+            $(this).closest('.cart_product_qty').find('.cart_container_item_qty').val(quantity);
+            if (quantity > 10) {
+                quantity = 10;
+                $(this).closest('.cart_product_qty').find('.cart_container_item_qty').val(quantity);
+                toastr.error('Số lượng sản phẩm không thể lớn hơn 10', 'Thất Bại');
+                return;
+            }
+            $.ajax({
+                url: '/increaseQty',
+                type: 'get',
+                data: { id: id, quantity: quantity },
+                success: function (response) {
+                    renderMiniCart(response.data, response.total);
+                    toastr.success(response.message, 'Thành Công');
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        })
+        // ? Delete All Cart
+        $('#removeAllCart').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/removeAllCart',
+                type: 'get',
+                success: function (response) {
+                    renderMiniCart(response.data, response.total);
+                    toastr.success(response.message, 'Thành Công');
+                    // ? Timeout 2s and reload page
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        })
     })
 
 </script>

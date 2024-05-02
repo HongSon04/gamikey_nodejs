@@ -5,37 +5,42 @@
             <div class="cart_container">
                 <div class="cart_container_section col-12 d-lg-flex">
                     <div class="col-lg-8 col-12 cart_container_left p-4 border rounded me-4 shadow-lg">
-                        <h2>Giỏ Hàng - 2 sản phẩm <span style="float: right; margin-right: 15px;"><a href=""
-                                    title="Xóa Giỏ Hàng">Xóa Tất Cả
-                                </a></span></h2>
+                        <h2>Giỏ Hàng - <%=carts.length%> sản phẩm <span style="float: right; margin-right: 15px;">
+                                    <% if(carts.length>0){%> <a id="removeAllCart" href="/removeAllCart"
+                                            title="Xóa Giỏ Hàng">Xóa Tất Cả
+                                        </a>
+                                        <% } %>
+                                </span></h2>
                         <div class="cart_container_items pt-sm-0 pt-1">
                             <% if (carts.length> 0) { %>
                                 <% carts.forEach(cart=> { %>
-                                    <div
+                                    <div data-id="<%=cart.id%>"
                                         class="cart_container_item shadow d-sm-flex align-items-center border rounded p-3 mt-4">
                                         <div class="col-sm-2 col-12 cart_product_img">
-                                            <img class="cart_container_item_img"
-                                                src="<%=cart.image%>" alt="">
+                                            <img class="cart_container_item_img" src="<%=cart.image%>" alt="">
                                         </div>
                                         <div class="col-sm-5 col-12 my-sm-0 my-3 cart_product_text">
-                                            <a href="/product/<%=cart.slug%>" class="cart_container_item_name">Tài Khoản Canva Education Vĩnh
-                                                Viễn</a>
+                                            <a href="/product/<%=cart.slug%>" class="cart_container_item_name">
+                                                <%=cart.name%>
+                                            </a>
                                             <br>
-                                           
-                                            <p class="cart_container_item_price product_price"><%=cart.price%></p>
+
+                                            <p class="cart_container_item_price product_price">
+                                                <%=cart.price%>
+                                            </p>
                                         </div>
                                         <div class="col-sm-4 col-12 cart_product_qty d-flex justify-content-center">
-                                            <button class="decreQty"><i class="far fa-minus fa-fw"
-                                                    title="Giảm Số Lượng"></i></button>
-                                            <input type="number" class="cart_container_item_qty" value="1" min="1"
-                                                max="10" readonly inputmode="numeric">
-                                            <button class="increQty"><i class="far fa-plus fa-fw"
+                                            <button data-id="<%=cart.id%>" class="decreQty"><i
+                                                    class="far fa-minus fa-fw" title="Giảm Số Lượng"></i></button>
+                                            <input type="phone" class="cart_container_item_qty"
+                                                value="<%=cart.quantity%>" min="1" max="10" readonly="readonly">
+                                            <button data-id="<%=cart.id%>" class="increQty"><i class="far fa-plus fa-fw"
                                                     title="Tăng Số Lượng"></i></button>
                                         </div>
                                         <div
                                             class="col-sm-1 col-12 cart_product_action d-sm-block d-flex justify-content-end">
-                                            <button class="cart_container_item_remove" title="Xóa Sản Phẩm Này"><i
-                                                    class="fas fa-trash-alt"></i></button>
+                                            <button data-id="<%=cart.id%>" class="cart_container_item_remove"
+                                                title="Xóa Sản Phẩm Này"><i class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </div>
                                     <% }) %>
@@ -58,7 +63,7 @@
                                         placeholder="Nhập Mã Giảm Giá">
                                     <button type="submit" id="applyCoupon">Áp Dụng</button>
                                 </div>
-                                <h4>Giá trị sản phẩm: <span>198.000 đ</span></h4>
+                                <h4>Giá trị sản phẩm: <span class="sub_total"></span></h4>
                                 <h4>Giảm Giá: <span>0 đ</span></h4>
                                 <h4>Tổng Tiền: <span>198.000 đ</span></h4>
                                 <div class="line-separation"></div>
@@ -104,3 +109,13 @@
     </main>
 
     <%- include('../../partials/footer'); -%>
+        <script>
+            let success = '<%= success %>';
+            if (success != '') {
+                toastr.success(success, 'Thành Công');
+            }
+            let errors = '<%= errors %>';
+            if (errors != '') {
+                toastr.error(errors, 'Lỗi');
+            }
+        </script>

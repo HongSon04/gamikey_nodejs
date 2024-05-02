@@ -84,22 +84,29 @@
                                     </h2>
                                 </div>
                                 <div class="col-12 action_product_container d-flex">
-                                    <form action="" method="get">
-                                        <button type="submit" id="btn_checkout" class="shadow-lg"><i
-                                                class="fas fa-wallet fa-fw"></i>Mua
-                                            Ngay</button>
-                                    </form>
-                                    <form action="/addToCart" method="get">
-                                        <input type="hidden" name="id" value="<%=product.id%>">
-                                        <input type="hidden" name="name" value="<%=product.name%>">
-                                        <input type="hidden" name="price" value="<%=product.price%>">
-                                        <input type="hidden" name="slug" value="<%=product.slug%>">
-                                        <input type="hidden" name="image" value="<%=product.image%>">
-                                        <input type="hidden" name="quantity" value="1">
-                                        <input type="hidden" name="type" value="<%=product.type%>">
-                                        <button type="submit" id="btn_addToCart" class="shadow-lg"><i
-                                                class="fas fa-shopping-cart"></i>Thêm Giỏ Hàng</button>
-                                    </form>
+                                    <% if(product.quantity> 0) { %>
+                                        <form action="" method="get">
+                                            <button type="submit" id="btn_checkout" class="shadow-lg"><i
+                                                    class="fas fa-wallet fa-fw"></i>Mua
+                                                Ngay</button>
+                                        </form>
+                                        <form action="/addToCart" method="get">
+                                            <input type="hidden" name="id" value="<%=product.id%>">
+                                            <input type="hidden" name="name" value="<%=product.name%>">
+                                            <input type="hidden" name="price" value="<%=product.price%>">
+                                            <input type="hidden" name="slug" value="<%=product.slug%>">
+                                            <input type="hidden" name="image" value="<%=product.image%>">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <input type="hidden" name="type" value="<%=product.type%>">
+                                            <button type="submit" id="btn_addToCart" class="shadow-lg"><i
+                                                    class="fas fa-shopping-cart"></i>Thêm Giỏ
+                                                Hàng</button>
+                                        </form>
+                                        <% } else if (product.quantity==0) { %>
+                                            <button type="submit" class="btn btn-secondary col-6" disabled><i
+                                                    class="fas fa-shopping-cart"></i>Hết
+                                                Hàng</button>
+                                            <% } %>
                                 </div>
                             </div>
                         </div>
@@ -452,3 +459,14 @@
     </main>
 
     <%- include('../../partials/footer'); -%>
+        <script>
+            let success = '<%= success %>';
+            if (success) {
+                toastr.success(success);
+            }
+
+            let errors = '<%= errors %>';
+            if (errors) {
+                toastr.error(errors);
+            }
+        </script>

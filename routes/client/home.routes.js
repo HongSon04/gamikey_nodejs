@@ -28,6 +28,17 @@ homeRouter.post('/info-register/:token', HomeController.infoRegister);
 // ? [GET] /Check-Email
 homeRouter.get('/check-email', HomeController.checkEmail);
 
+// ? [GET] /forgot-password
+homeRouter.get('/forgot-password', HomeController.forgotPassword);
+
+// ? [POST]
+homeRouter.post('/forgot-password', HomeController.postForgotPassword);
+
+// ? [GET] /reset-password
+homeRouter.get('/reset-password/:token', HomeController.resetPassword);
+
+// ? [POST] /reset-password/:token
+homeRouter.post('/reset-password/:token', HomeController.postResetPassword);
 // ? [GET] /logout
 homeRouter.get('/logout', HomeController.logout);
 

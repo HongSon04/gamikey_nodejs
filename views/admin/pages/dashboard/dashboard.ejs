@@ -800,3 +800,9 @@
     <script src="/admin/js/app-ecommerce-dashboard.js"></script>
 
     <%- include('../../partials/footer.ejs') %>
+        <script>
+            let success = '<%= success %>';
+            if (success) {
+                toastr.success(success);
+            }
+        </script>

@@ -1,3 +1,4 @@
+const { success } = require('toastr');
 const Brand = require('../../model/brand.model');
 const Category = require('../../model/category.model');
 const Product = require('../../model/product.model');
@@ -33,6 +34,8 @@ class ProductController {
       getBrands,
       slug,
       userInfo,
+      success: req.flash('success'),
+      errors: req.flash('errors'),
     });
   }
 

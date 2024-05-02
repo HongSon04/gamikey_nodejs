@@ -45,6 +45,7 @@ class HomeController {
       getBrands,
       slug: 'home',
       userInfo,
+      success: req.flash('success'),
     });
   }
 
@@ -54,7 +55,10 @@ class HomeController {
     if (req.cookies.token) {
       return res.redirect('/');
     } else {
-      res.render('client/pages/login.ejs');
+      res.render('client/pages/login.ejs', {
+        success: req.flash('success'),
+        errors: req.flash('errors'),
+      });
     }
   }
 
@@ -62,14 +66,18 @@ class HomeController {
   async postLogin(req, res) {
     const { email, password } = req.body;
     if (email === '' || password === '') {
+      req.flash('errors', 'Vui lòng nhập đầy đủ thông tin');
       return res.redirect('/login');
     } else {
       const user = await userModel.findOne({ email });
       if (!user) {
+        req.flash('errors', 'Địa chỉ email không tồn tại');
         return res.redirect('/login');
       } else {
         const isMatch = await user.matchPassword(password);
         if (!isMatch) {
+          //  ? Password không trùng khớp
+          req.flash('errors', 'Email hoặc mật khẩu không đúng');
           return res.redirect('/login');
         } else {
           // ? Lưu JWT Token
@@ -81,8 +89,10 @@ class HomeController {
           };
           res.cookie('token', token, options);
           if (user.role === 'admin') {
+            req.flash('success', 'Đăng nhập thành công');
             return res.redirect('/admin/dashboard');
           } else {
+            req.flash('success', 'Đăng nhập thành công');
             return res.redirect('/');
           }
         }
@@ -225,7 +235,7 @@ class HomeController {
   // ? [GET] /send-mail
   async sendMail(req, res) {
     const email = 'user123@gmail.com';
-    const subject = 'Hello';
+    const subject = 'Xác nhận Email';
     const token = '123456';
     const html = await ejs.renderFile(`views/email/verify-email.ejs`, {
       email,
@@ -233,6 +243,95 @@ class HomeController {
     });
     await sendMailVerify(email, subject, html);
     res.send('Send mail success');
+  }
+
+  // ? [GET] /forgot-password
+  forgotPassword(req, res) {
+    res.render('client/pages/forgot-password.ejs', {
+      success: req.flash('success'),
+      errors: req.flash('errors'),
+    });
+  }
+
+  // ? [POST] /forgot-password
+  async postForgotPassword(req, res) {
+    const email = req.body.email;
+    // ? Check Isset Email
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      req.flash('errors', 'Email không tồn tại');
+      return res
+        .status(400)
+        .json({ status: 'error', message: 'Email không tồn tại' });
+    } else {
+      const token = randomNumber(15);
+      const subject = 'Yêu cầu khôi phục mật khẩu';
+      // ? Tạo Token và Email trong DB
+      const userToken = new user_tokenModel();
+      userToken.user_email = email;
+      userToken.token = token;
+      userToken.type = 'forgot-password';
+      await userToken.save();
+      const html = await ejs.renderFile(`views/email/forgot-password.ejs`, {
+        email,
+        token,
+      });
+      await sendMailVerify(email, subject, html);
+      res.status(200).json({
+        status: 'success',
+        message: 'Yêu Cầu Khôi Phục Mật Khẩu Thành Công',
+      });
+    }
+  }
+
+  // ? [get] /resetPassword/:token
+  async resetPassword(req, res) {
+    const token = req.params.token;
+    const userToken = await user_tokenModel.findOne({ token });
+    const issetToken = true;
+    if (userToken) {
+      res.render('client/pages/reset-password.ejs', {
+        token,
+        issetToken,
+        success: req.flash('success'),
+        errors: req.flash('errors'),
+      });
+    } else {
+      res.render('client/pages/reset-password.ejs', {
+        success: req.flash('success'),
+        errors: req.flash('errors'),
+        token,
+        issetToken: false,
+      });
+    }
+  }
+
+  // ? [POST] /reset-password/:token
+  async postResetPassword(req, res) {
+    const { password, password_confirm } = req.body;
+    const token = req.params.token;
+    if (password === '' || password_confirm === '') {
+      req.flash('errors', 'Vui lòng nhập mật khẩu');
+      return res.redirect(`/reset-password/${token}`);
+    } else {
+      if (password !== password_confirm) {
+        req.flash('errors', 'Mật khẩu không trùng khớp');
+        return res.redirect(`/reset-password/${token}`);
+      } else {
+        const userToken = await user_tokenModel.findOne({ token });
+        if (userToken) {
+          const user = await userModel.findOne({ email: userToken.user_email });
+          user.password = password;
+          await user.save();
+          await userToken.deleteOne({ token });
+          req.flash('success', 'Đổi mật khẩu thành công');
+          return res.redirect('/login');
+        } else {
+          req.flash('errors', 'Yêu cầu khôi phục mật khẩu không hợp lệ');
+          return res.redirect(`/reset-password/${token}`);
+        }
+      }
+    }
   }
 
   // ? [GET] /logout

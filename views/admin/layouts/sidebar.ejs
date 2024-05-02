@@ -63,26 +63,26 @@
                     <div data-i18n="Thương Hiệu">Thương Hiệu</div>
                     </a>
                 </li>
-                <li class="menu-item <%= route === 'product' ? 'active' : '' %>"">
-                    <a href=" /admin/product" class="menu-link">
-                    <div data-i18n="Sản Phẩm">Sản Phẩm</div>
-                    </a>
-                </li>
             </ul>
         </li>
         <!-- Sản Phẩm -->
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text" data-i18n="Quản Lý Danh Mục">Quản Lý Sản Phẩm</span>
         </li>
-        <li class="menu-item <%= route === 'product' ? 'active open' : '' %>">
+        <li class="menu-item <%= route === 'product' || route === 'coupon' ? 'active open' : '' %>">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
                 <div data-i18n="Quản Lý Sản Phẩm">Quản Lý Sản Phẩm</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item <%= route === 'product' ? 'active' : '' %>"">
-                                    <a href=" /admin/product" class="menu-link">
-                    <div data-i18n="Sản Phẩm">Sản Phẩm</div>
+                <li class="menu-item <%= route === 'product' ? 'active' : '' %>">
+                    <a href=" /admin/product" class="menu-link">
+                        <div data-i18n="Sản Phẩm">Sản Phẩm</div>
+                    </a>
+                </li>
+                <li class="menu-item <%= route === 'coupon' ? 'active' : '' %>">
+                    <a href=" /admin/coupon" class="menu-link">
+                        <div data-i18n="Mã Giảm Giá">Mã Giảm Giá</div>
                     </a>
                 </li>
             </ul>
