@@ -16,6 +16,7 @@ class CartController {
     const getBrands = await getAllBrands();
     // ? Get All Carts
     const carts = req.session.cart || [];
+    const code = req.session.coupon || '';
     const userInfo = req.headers.authorization;
     res.render('client/pages/cart.ejs', {
       getBestProductPurchased,
@@ -24,6 +25,7 @@ class CartController {
       userInfo,
       slug: 'cart',
       carts,
+      code,
       success: req.flash('success'),
       errors: req.flash('errors'),
     });

@@ -5,86 +5,95 @@
             <div class="cart_container">
                 <div class="cart_container_section col-12 d-lg-flex">
                     <div class="col-lg-8 col-12 cart_container_left p-4 border rounded me-4 shadow-lg">
-                        <div class="col-12">
-                            <p>Bạn đã có tài khoản? <a href="">Ấn vào đây để đăng nhập</a></p>
-                        </div>
-                        <h2>Giỏ Hàng - <%=carts.length%> sản phẩm <span style="float: right; margin-right: 15px;">
-                                    <% if(carts.length>0){%> <a id="removeAllCart" href="/removeAllCart"
-                                            title="Xóa Giỏ Hàng">Xóa Tất Cả
-                                        </a>
-                                        <% } %>
-                                </span></h2>
-                        <div class="cart_container_items pt-sm-0 pt-1">
-                            <% if (carts.length> 0) { %>
-                                <% carts.forEach(cart=> { %>
-                                    <div data-id="<%=cart.id%>"
-                                        class="cart_container_item shadow d-sm-flex align-items-center border rounded p-3 mt-4">
-                                        <div class="col-sm-2 col-12 cart_product_img">
-                                            <img class="cart_container_item_img" src="<%=cart.image%>" alt="">
-                                        </div>
-                                        <div class="col-sm-5 col-12 my-sm-0 my-3 cart_product_text">
-                                            <a href="/product/<%=cart.slug%>" class="cart_container_item_name">
-                                                <%=cart.name%>
-                                            </a>
-                                            <br>
-
-                                            <p class="cart_container_item_price product_price">
-                                                <%=cart.price%>
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-4 col-12 cart_product_qty d-flex justify-content-center">
-                                            <button data-id="<%=cart.id%>" class="decreQty"><i
-                                                    class="far fa-minus fa-fw" title="Giảm Số Lượng"></i></button>
-                                            <input type="phone" class="cart_container_item_qty"
-                                                value="<%=cart.quantity%>" min="1" max="10" readonly="readonly">
-                                            <button data-id="<%=cart.id%>" class="increQty"><i class="far fa-plus fa-fw"
-                                                    title="Tăng Số Lượng"></i></button>
-                                        </div>
-                                        <div
-                                            class="col-sm-1 col-12 cart_product_action d-sm-block d-flex justify-content-end">
-                                            <button data-id="<%=cart.id%>" class="cart_container_item_remove"
-                                                title="Xóa Sản Phẩm Này"><i class="fas fa-trash-alt"></i></button>
-                                        </div>
-                                    </div>
-                                    <% }) %>
-                                        <% } else { %>
-                                            <div
+                        <% if(userInfo.length>0){%>
+                            <div class="col-12">
+                                <p>Bạn đã có tài khoản? <a href="/login">Ấn vào đây để đăng nhập</a></p>
+                            </div>
+                            <% } %>
+                                <h2>Giỏ Hàng - <%=carts.length%> sản phẩm <span
+                                            style="float: right; margin-right: 15px;">
+                                            <% if(carts.length>0){%> <a id="removeAllCart" href="/removeAllCart"
+                                                    title="Xóa Giỏ Hàng">Xóa Tất Cả
+                                                </a>
+                                                <% } %>
+                                        </span></h2>
+                                <div class="cart_container_items pt-sm-0 pt-1">
+                                    <% if (carts.length> 0) { %>
+                                        <% carts.forEach(cart=> { %>
+                                            <div data-id="<%=cart.id%>"
                                                 class="cart_container_item shadow d-sm-flex align-items-center border rounded p-3 mt-4">
-                                                <div class="col-12 text-center">
-                                                    <h4>Không có sản phẩm nào trong giỏ hàng</h4>
+                                                <div class="col-sm-2 col-12 cart_product_img">
+                                                    <img class="cart_container_item_img" src="<%=cart.image%>" alt="">
+                                                </div>
+                                                <div class="col-sm-5 col-12 my-sm-0 my-3 cart_product_text">
+                                                    <a href="/product/<%=cart.slug%>" class="cart_container_item_name">
+                                                        <%=cart.name%>
+                                                    </a>
+                                                    <br>
+
+                                                    <p class="cart_container_item_price product_price">
+                                                        <%=cart.price%>
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    class="col-sm-4 col-12 cart_product_qty d-flex justify-content-center">
+                                                    <button data-id="<%=cart.id%>" class="decreQty"><i
+                                                            class="far fa-minus fa-fw"
+                                                            title="Giảm Số Lượng"></i></button>
+                                                    <input type="phone" class="cart_container_item_qty"
+                                                        value="<%=cart.quantity%>" min="1" max="10" readonly="readonly">
+                                                    <button data-id="<%=cart.id%>" class="increQty"><i
+                                                            class="far fa-plus fa-fw"
+                                                            title="Tăng Số Lượng"></i></button>
+                                                </div>
+                                                <div
+                                                    class="col-sm-1 col-12 cart_product_action d-sm-block d-flex justify-content-end">
+                                                    <button data-id="<%=cart.id%>" class="cart_container_item_remove"
+                                                        title="Xóa Sản Phẩm Này"><i
+                                                            class="fas fa-trash-alt"></i></button>
                                                 </div>
                                             </div>
-                                            <% } %>
-                        </div>
-                        <div class="col-12 cart_form_checkout my-5 d-flex flex-wrap">
-                            <div class="col-12">
-                                <h2>THÔNG TIN THANH TOÁN</h2>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="fullname">Họ và Tên</label>
-                                    <input type="text" class="form-control" id="fullname" placeholder="Nhập Họ và Tên"
-                                        name="fullname" value="{{ @Auth::user()->name }}">
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <div
+                                                        class="cart_container_item shadow d-sm-flex align-items-center border rounded p-3 mt-4">
+                                                        <div class="col-12 text-center">
+                                                            <h4>Không có sản phẩm nào trong giỏ hàng</h4>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <!-- Số điện thoại -->
-                                <div class="form-group ps-3">
-                                    <label for="phone">Số Điện Thoại</label>
-                                    <input type="text" class="form-control" id="phone" placeholder="Nhập Số Điện Thoại"
-                                        name="phone" value="{!! @Auth::user()->phone !!}">
+                                <div class="col-12 cart_form_checkout my-5 d-flex flex-wrap">
+                                    <div class="col-12">
+                                        <h2>THÔNG TIN THANH TOÁN</h2>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="fullname">Họ và Tên</label>
+                                            <input type="text" class="form-control" id="fullname"
+                                                placeholder="Nhập Họ và Tên" name="fullname" value="<%=userInfo.name%>">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <!-- Số điện thoại -->
+                                        <div class="form-group ps-3">
+                                            <label for="phone">Số Điện Thoại</label>
+                                            <input type="text" class="form-control" id="phone"
+                                                placeholder="Nhập Số Điện Thoại" name="phone"
+                                                value="<%=userInfo.phone%>">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="text" class="form-control" id="email" placeholder="Nhập Email"
+                                                name="email" value="<%=userInfo.email%>">
+                                            <label for="email" class="text-danger mt-2">Vui lòng nhập chính xác email để
+                                                nhận
+                                                hàng nhanh nhất</label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12 my-3">
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="text" class="form-control" id="email" placeholder="Nhập Email"
-                                        name="email" value="{!! @Auth::user()->email !!}">
-                                    <label for="email" class="text-danger mt-2">Vui lòng nhập chính xác email để nhận
-                                        hàng nhanh nhất</label>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-lg-4 col-12 cart_container_right mt-sm-0 mt-4">
                         <div class="cart_container_right_section border rounded p-4 shadow-lg">
@@ -105,26 +114,31 @@
                                     <div class="payment_method">
                                         <h4>Phương Thức Thanh Toán</h4>
                                         <div class="payment_method_list">
-                                            <form action="" method="get">
+                                            <form action="/checkout" method="POST">
                                                 <div class="payment_method_item radio-item d-flex align-items-center">
                                                     <input type="radio" name="payment_method" id="payment_method_1"
-                                                        value="1">
+                                                        value="momo">
                                                     <label for="payment_method_1"><img
-                                                            src="./public/images/logo-momo-png.png" alt=""></label>
+                                                            src="/client/images/logo-momo-png.png" alt=""></label>
                                                 </div>
                                                 <div class="payment_method_item radio-item d-flex align-items-center">
                                                     <input type="radio" name="payment_method" id="payment_method_2"
                                                         value="2">
                                                     <label for="payment_method_2"><img
-                                                            src="./public/images/Logo ZaloPay Square.png"
-                                                            alt=""></label>
+                                                            src="/client/images/Logo ZaloPay Square.png" alt=""></label>
                                                 </div>
                                                 <div class="payment_method_item radio-item d-flex align-items-center">
                                                     <input type="radio" name="payment_method" id="payment_method_3"
                                                         value="3">
                                                     <label for="payment_method_3"><img
-                                                            src="./public/images/Paypal_logo_PNG2.png" alt=""></label>
+                                                            src="/client/images/Paypal_logo_PNG2.png" alt=""></label>
                                                 </div>
+                                                <input type="hidden" name="name" id="inputName"
+                                                    value="<%=userInfo.name%>">
+                                                <input type="hidden" name="phone" id="inputPhone"
+                                                    value="<%=userInfo.phone%>">
+                                                <input type="hidden" name="email" id="inputEmail"
+                                                    value="<%=userInfo.email%>">
                                                 <div class="action_payment_method d-flex justify-content-between">
                                                     <a href="/" class="btn"><i class="fas fa-home-lg fa-fw"></i>&nbsp;
                                                         &nbsp; Mua Tiếp</a>
@@ -164,5 +178,18 @@
             if (errors != '') {
                 toastr.error(errors, 'Lỗi');
             }
-
+            $(document).ready(function () {
+                $('#fullname').on('keyup', function () {
+                    let data = $(this).val();
+                    $('#inputName').val(data);
+                })
+                $('#phone').on('keyup', function () {
+                    let data = $(this).val();
+                    $('#inputPhone').val(data);
+                })
+                $('#email').on('keyup', function () {
+                    let data = $(this).val();
+                    $('#inputEmail').val(data);
+                })
+            })
         </script>

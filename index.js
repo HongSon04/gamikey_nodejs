@@ -23,11 +23,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(`${__dirname}/public`));
 // ? Flash Messages
 app.use(cookieParser('keyboard cat'));
-// ? Cookies hết hạn sau 1 ngày
+// ? Cookies hết hạn sau 12 tiếng
 app.use(
   session({
     secret: 'keyboard cat',
-    cookie: { maxAge: 60000 }, // ? 1 ngày
+    cookie: { maxAge: 43200000 },
   }),
 );
 app.use(flash());
