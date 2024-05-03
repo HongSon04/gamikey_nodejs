@@ -5,6 +5,9 @@
             <div class="cart_container">
                 <div class="cart_container_section col-12 d-lg-flex">
                     <div class="col-lg-8 col-12 cart_container_left p-4 border rounded me-4 shadow-lg">
+                        <div class="col-12">
+                            <p>Bạn đã có tài khoản? <a href="">Ấn vào đây để đăng nhập</a></p>
+                        </div>
                         <h2>Giỏ Hàng - <%=carts.length%> sản phẩm <span style="float: right; margin-right: 15px;">
                                     <% if(carts.length>0){%> <a id="removeAllCart" href="/removeAllCart"
                                             title="Xóa Giỏ Hàng">Xóa Tất Cả
@@ -53,6 +56,35 @@
                                             </div>
                                             <% } %>
                         </div>
+                        <div class="col-12 cart_form_checkout my-5 d-flex flex-wrap">
+                            <div class="col-12">
+                                <h2>THÔNG TIN THANH TOÁN</h2>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="fullname">Họ và Tên</label>
+                                    <input type="text" class="form-control" id="fullname" placeholder="Nhập Họ và Tên"
+                                        name="fullname" value="{{ @Auth::user()->name }}">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <!-- Số điện thoại -->
+                                <div class="form-group ps-3">
+                                    <label for="phone">Số Điện Thoại</label>
+                                    <input type="text" class="form-control" id="phone" placeholder="Nhập Số Điện Thoại"
+                                        name="phone" value="{!! @Auth::user()->phone !!}">
+                                </div>
+                            </div>
+                            <div class="col-12 my-3">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" id="email" placeholder="Nhập Email"
+                                        name="email" value="{!! @Auth::user()->email !!}">
+                                    <label for="email" class="text-danger mt-2">Vui lòng nhập chính xác email để nhận
+                                        hàng nhanh nhất</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-4 col-12 cart_container_right mt-sm-0 mt-4">
                         <div class="cart_container_right_section border rounded p-4 shadow-lg">
@@ -61,7 +93,7 @@
                                     <h2>Thanh Toán</h2>
                                     <form class="coupon_cart d-flex my-3" action="" method="get">
                                         <input id="inputCoupon" class="form-control" type="text"
-                                            placeholder="Nhập Mã Giảm Giá">
+                                            placeholder="Nhập Mã Giảm Giá" value="<%=code.code%>">
                                         <button type="submit" id="applyCoupon">Áp Dụng</button>
                                     </form>
                                     <h4>Giá trị sản phẩm: <span class="sub_total"></span></h4>
@@ -73,13 +105,33 @@
                                     <div class="payment_method">
                                         <h4>Phương Thức Thanh Toán</h4>
                                         <div class="payment_method_list">
-
-                                            <div class="action_payment_method d-flex justify-content-between">
-                                                <a href="/" class="btn"><i class="fas fa-home-lg fa-fw"></i>&nbsp;
-                                                    &nbsp; Mua Tiếp</a>
-                                                <a href="/checkout" class="btn">Thanh Toán &nbsp; &nbsp; <i
-                                                        class="fas fa-fast-forward"></i></a>
-                                            </div>
+                                            <form action="" method="get">
+                                                <div class="payment_method_item radio-item d-flex align-items-center">
+                                                    <input type="radio" name="payment_method" id="payment_method_1"
+                                                        value="1">
+                                                    <label for="payment_method_1"><img
+                                                            src="./public/images/logo-momo-png.png" alt=""></label>
+                                                </div>
+                                                <div class="payment_method_item radio-item d-flex align-items-center">
+                                                    <input type="radio" name="payment_method" id="payment_method_2"
+                                                        value="2">
+                                                    <label for="payment_method_2"><img
+                                                            src="./public/images/Logo ZaloPay Square.png"
+                                                            alt=""></label>
+                                                </div>
+                                                <div class="payment_method_item radio-item d-flex align-items-center">
+                                                    <input type="radio" name="payment_method" id="payment_method_3"
+                                                        value="3">
+                                                    <label for="payment_method_3"><img
+                                                            src="./public/images/Paypal_logo_PNG2.png" alt=""></label>
+                                                </div>
+                                                <div class="action_payment_method d-flex justify-content-between">
+                                                    <a href="/" class="btn"><i class="fas fa-home-lg fa-fw"></i>&nbsp;
+                                                        &nbsp; Mua Tiếp</a>
+                                                    <button type="submit" class="btn">Thanh Toán &nbsp; &nbsp; <i
+                                                            class="fas fa-fast-forward"></i></button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

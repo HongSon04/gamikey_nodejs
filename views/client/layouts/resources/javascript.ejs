@@ -62,7 +62,8 @@
                 $(this).text(text);
             }
         });
-
+        renderMiniCart(null, null);
+        getAllFinalAmount()
         // ? Show mini cart when click on button add to cart
         function handleMiniCart() {
             $('.mini_cart').addClass('active');
@@ -79,11 +80,11 @@
             });
         }
 
-        renderMiniCart(null, null);
         // ? Render mini cart
         function renderMiniCart(resData, resTotal) {
             if (resData != null && resTotal != null) {
                 let html = ' ';
+                $('.amout_product_cart').find('.sub_total').text('0');
                 $('.mini_cart_subtotal').text('0');
                 $('.mini_cart_wrapper').html(' ');
                 resData.forEach(item => {
@@ -106,14 +107,15 @@
 
                 });
                 $('.mini_cart_wrapper').html(html);
+                $('.amout_product_cart').find('.sub_total').text(resTotal);
                 $('.mini_cart_subtotal').text(resTotal);
-                $('.sub_total').text(resTotal);
                 formarPrice('.mini_cart_price');
                 formarPrice('.mini_cart_subtotal');
                 formarPrice('.sub_total');
             } else {
                 $('.mini_cart_wrapper').html(' ');
                 $('.mini_cart_subtotal').text('0');
+                $('.amout_product_cart').find('.sub_total').text('0');
                 let html = ' ';
                 $.ajax({
                     url: '/getMiniCart',
@@ -140,7 +142,8 @@
                             });
                             $('.mini_cart_wrapper').html(html);
                             $('.mini_cart_subtotal').text(response.total);
-                            $('.sub_total').text(response.total);
+                            $('.amout_product_cart').find('.sub_total').text(response.total);
+
                             formarPrice('.mini_cart_price');
                             formarPrice('.mini_cart_subtotal');
                             formarPrice('.sub_total');
@@ -190,6 +193,7 @@
                 url: url,
                 type: 'get',
                 success: function (response) {
+                    getAllFinalAmount()
                     toastr.success(response.message, 'Thành Công');
                     renderMiniCart(response.data, response.total);
 
@@ -208,6 +212,7 @@
                 type: 'get',
                 data: { id: id },
                 success: function (response) {
+                    getAllFinalAmount()
                     renderMiniCart(response.data, response.total);
                     toastr.success(response.message, 'Thành Công');
                     window.location.reload();
@@ -235,6 +240,7 @@
                 type: 'get',
                 data: { id: id, quantity: quantity },
                 success: function (response) {
+                    getAllFinalAmount()
                     renderMiniCart(response.data, response.total);
                     toastr.success(response.message, 'Thành Công');
                 },
@@ -261,6 +267,7 @@
                 type: 'get',
                 data: { id: id, quantity: quantity },
                 success: function (response) {
+                    getAllFinalAmount()
                     renderMiniCart(response.data, response.total);
                     toastr.success(response.message, 'Thành Công');
                 },
@@ -287,6 +294,55 @@
                     console.log(xhr.responseText);
                 }
             });
+        })
+        function getAllFinalAmount() {
+            $.ajax({
+                url: '/getFinalAmount',
+                type: 'GET',
+                success: function (res) {
+                    if (res.status == 'success') {
+                        $('.sub_total').html(res.total);
+                        $('.discount_amount').html(res.discount);
+                        $('.final_amount').html(res.finalAmount);
+                        formarPrice('.sub_total');
+                        formarPrice('.discount_amount');
+                        formarPrice('.final_amount');
+                    }
+                },
+                error: function (err) {
+                    return 0;
+                    toastr.error('Có lỗi xảy ra', 'Lỗi');
+                }
+            })
+        }
+        $('.coupon_cart').submit(function (e) {
+            e.preventDefault();
+            let coupon = $('#inputCoupon').val().trim();
+            $.ajax({
+                url: '/applyCoupon',
+                type: 'POST',
+                data: {
+                    coupon: coupon
+                },
+                beforeSend: function () {
+                    $('#applyCoupon').html('<i class="fas fa-spinner fa-spin"></i> Đang Xử Lý');
+                },
+                success: function (res) {
+                    if (res.status) {
+                        getAllFinalAmount()
+                        toastr.success(res.message, 'Thành Công');
+                    } else {
+                        toastr.error(res.message, 'Lỗi');
+                    }
+                },
+                error: function (err) {
+                    toastr.error('Có lỗi xảy ra', 'Lỗi');
+                },
+                complete: function () {
+                    getAllFinalAmount()
+                    $('#applyCoupon').html('Áp Dụng');
+                }
+            })
         })
     })
 
