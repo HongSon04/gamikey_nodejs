@@ -85,11 +85,11 @@
                                 </div>
                                 <div class="col-12 action_product_container d-flex">
                                     <% if(product.quantity> 0) { %>
-                                        <form action="" method="get">
+                                        <!-- <form action="" method="get">
                                             <button type="submit" id="btn_checkout" class="shadow-lg"><i
                                                     class="fas fa-wallet fa-fw"></i>Mua
                                                 Ngay</button>
-                                        </form>
+                                        </form> -->
                                         <form action="/addToCart" method="get">
                                             <input type="hidden" name="id" value="<%=product.id%>">
                                             <input type="hidden" name="name" value="<%=product.name%>">
@@ -168,240 +168,249 @@
                     <h2 id="title"><strong>ĐÁNH GIÁ - NHẬN XÉT</strong> TỪ KHÁCH HÀNG</h2>
                     <div class="rate_comments_from_customers">
                         <!-- ****** SEND MESSAGE AND TABLE RATE***** -->
-                        <div class="col-12 rate_comments_from_customers_items d-lg-flex border rounded p-4">
-                            <div class="col-lg-4 rate_comments_from_customers_item_left">
-                                <div class="review-rating__summary col-12 d-flex">
-                                    <div class="review-rating__point">4</div>
-                                    <div class="review-rating__stars">
-                                        <div class="total_comment">
-                                            <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                            <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                            <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                            <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                            <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                        <% if (userInfo && userInfo !=='undefined' ) { %>
+                            <div class="col-12 rate_comments_from_customers_items d-lg-flex border rounded p-4">
+                                <div class="col-lg-4 rate_comments_from_customers_item_left">
+                                    <div class="review-rating__summary col-12 d-flex">
+                                        <div class="review-rating__point">4</div>
+                                        <div class="review-rating__stars">
+                                            <div class="total_comment">
+                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                                            </div>
+                                            <div class="rating__stars_content">60 đánh giá</div>
                                         </div>
-                                        <div class="rating__stars_content">60 đánh giá</div>
+                                    </div>
+                                    <div class="review-rating__level col-12 mt-3">
+                                        <div class="review-rating__level_item">
+                                            <div class="line_star_level d-flex">
+                                                <div class="line_star_level_container">
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                </div>
+                                                <div class="line_star_total"> &nbsp; <i
+                                                        class="fal fa-grip-lines-vertical" style="color: #FFD43B;"></i>
+                                                    &nbsp; 62</div>
+                                            </div>
+                                        </div>
+                                        <div class="review-rating__level_item">
+                                            <div class="line_star_level d-flex">
+                                                <div class="line_star_level_container">
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                                                </div>
+                                                <div class="line_star_total"> &nbsp; <i
+                                                        class="fal fa-grip-lines-vertical" style="color: #FFD43B;"></i>
+                                                    &nbsp;
+                                                    62</div>
+                                            </div>
+                                        </div>
+                                        <div class="review-rating__level_item">
+                                            <div class="line_star_level d-flex">
+                                                <div class="line_star_level_container">
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+
+                                                </div>
+                                                <div class="line_star_total"> &nbsp; <i
+                                                        class="fal fa-grip-lines-vertical" style="color: #FFD43B;"></i>
+                                                    &nbsp;
+                                                    62</div>
+                                            </div>
+                                        </div>
+                                        <div class="review-rating__level_item">
+                                            <div class="line_star_level d-flex">
+                                                <div class="line_star_level_container">
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+
+                                                </div>
+                                                <div class="line_star_total"> &nbsp; <i
+                                                        class="fal fa-grip-lines-vertical" style="color: #FFD43B;"></i>
+                                                    &nbsp;
+                                                    62</div>
+                                            </div>
+                                        </div>
+                                        <div class="review-rating__level_item">
+                                            <div class="line_star_level d-flex">
+                                                <div class="line_star_level_container">
+                                                    <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                                                    <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
+                                                </div>
+                                                <div class="line_star_total"> &nbsp; <i
+                                                        class="fal fa-grip-lines-vertical" style="color: #FFD43B;"></i>
+                                                    &nbsp;
+                                                    62</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="review-rating__level col-12 mt-3">
-                                    <div class="review-rating__level_item">
-                                        <div class="line_star_level d-flex">
-                                            <div class="line_star_level_container">
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
+                                <div class="col-lg-8 rate_comments_from_customers_item_right">
+                                    <form action="/createComment" method="post" id="formSendComment">
+                                        <div class="" id="ratingComment"></div>
+                                        <input type="hidden" name="rating" id="rating" value="0">
+                                        <input type="hidden" name="product_id" id="product_id" value="<%=product.id%>">
+                                        <textarea style="resize: none;" class="form-control my-3" name="comment" id=""
+                                            cols="10" rows="5"></textarea>
+                                        <div class="buttonAction d-flex">
+                                            <div class="col-12 buttonSendComment d-flex justify-content-center">
+                                                <button class="sendComment btn btn-success" type="submit">Gửi Đánh
+                                                    Giá</button>
                                             </div>
-                                            <div class="line_star_total"> &nbsp; <i class="fal fa-grip-lines-vertical"
-                                                    style="color: #FFD43B;"></i> &nbsp; 62</div>
                                         </div>
-                                    </div>
-                                    <div class="review-rating__level_item">
-                                        <div class="line_star_level d-flex">
-                                            <div class="line_star_level_container">
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-                                            </div>
-                                            <div class="line_star_total"> &nbsp; <i class="fal fa-grip-lines-vertical"
-                                                    style="color: #FFD43B;"></i> &nbsp;
-                                                62</div>
-                                        </div>
-                                    </div>
-                                    <div class="review-rating__level_item">
-                                        <div class="line_star_level d-flex">
-                                            <div class="line_star_level_container">
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-
-                                            </div>
-                                            <div class="line_star_total"> &nbsp; <i class="fal fa-grip-lines-vertical"
-                                                    style="color: #FFD43B;"></i> &nbsp;
-                                                62</div>
-                                        </div>
-                                    </div>
-                                    <div class="review-rating__level_item">
-                                        <div class="line_star_level d-flex">
-                                            <div class="line_star_level_container">
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-
-                                            </div>
-                                            <div class="line_star_total"> &nbsp; <i class="fal fa-grip-lines-vertical"
-                                                    style="color: #FFD43B;"></i> &nbsp;
-                                                62</div>
-                                        </div>
-                                    </div>
-                                    <div class="review-rating__level_item">
-                                        <div class="line_star_level d-flex">
-                                            <div class="line_star_level_container">
-                                                <i style="color: #FFD43B;" class="fas fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-                                                <i style="color: #FFD43B;" class="far fa-star fa-fw"></i>
-                                            </div>
-                                            <div class="line_star_total"> &nbsp; <i class="fal fa-grip-lines-vertical"
-                                                    style="color: #FFD43B;"></i> &nbsp;
-                                                62</div>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="col-lg-8 rate_comments_from_customers_item_right">
-                                <form action="" method="post">
-                                    <div class="" id="ratingComment"></div>
-                                    <input type="hidden" name="rating">
-                                    <div class="js col-6">
-                                        <input type="file" name="file[]" id="file-1" class="inputfile inputfile-1"
-                                            data-multiple-caption="{count} files selected" multiple />
-                                        <label for="file-1"><i class="fas fa-cloud-upload fa-fw"></i> <span>Chọn
-                                                Ảnh&hellip;</span></label>
-                                    </div>
-                                    <textarea style="resize: none;" class="form-control my-3" name="comment" id=""
-                                        cols="10" rows="5"></textarea>
-                                    <div class="buttonAction d-flex">
-                                        <div class="col-12 buttonSendComment d-flex justify-content-center">
-                                            <button class="sendComment btn btn-success" type="submit">Gửi Đánh
-                                                Giá</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- ****** COMMENT OF USER***** -->
-                        <div id="reviews" class="comment_from_customers_container border rounded pe-3 my-4">
-                            <div class="comment_from_customers_items my-3">
-                                <div id="" class="comment_from_customers_item col-12 d-flex my-4">
-                                    <div class="col-md-2 col-sm-1 col-2 img_customers">
-                                        <img class="img_users" src="./public/images/Play-Games-icon-150x150.png" alt="">
-                                    </div>
-                                    <div class="col-md-10 col-sm-11 col-10 info_customers">
-                                        <div class="info_customers_container">
-                                            <div class="col-12 name_user">Hồng Sơn
-                                                <span style="color: #009900;">
-                                                    <i class="far fa-shopping-cart" style="color: #009900;">
-                                                    </i>
-                                                    Đã Mua Hàng Từ Gamikey</span>
-                                            </div>
-                                            <div class="col-12 time_comment">
-                                                <p>Bình luận vào 2024-03-06 12:05:51</p>
-                                            </div>
-                                            <div class="col-12 comment_text">
-                                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur a
-                                                error
-                                                voluptatem quas debitis quia temporibus natus possimus fuga veritatis?
-                                                Voluptas assumenda labore placeat vel molestias perspiciatis quasi
-                                                facilis
-                                                nesciunt?
-                                            </div>
-                                            <div class="col-12 replyComment">
-                                                <button id="replyCommentUser">Trả Lời</button>
-                                            </div>
-                                        </div>
-                                        <!-- ****** COMMENT REPLY ***** -->
-
-                                        <div class="comment_customer_reply">
-                                            <div class="comment_from_customers_item col-12 d-flex">
+                            <% } %>
+                                <!-- ****** COMMENT OF USER***** -->
+                                <div id="reviews" class="comment_from_customers_container border rounded pe-3 my-4">
+                                    <div class="comment_from_customers_items my-3">
+                                        <% comments.forEach(comment=> { %>
+                                            <div id="" class="comment_from_customers_item col-12 d-flex my-4">
                                                 <div class="col-md-2 col-sm-1 col-2 img_customers">
-                                                    <img class="img_users"
-                                                        src="./public/images/Play-Games-icon-150x150.png" alt="">
+                                                    <img class="img_users" src="<%=comment.user_id.avatar%>" alt="">
                                                 </div>
                                                 <div class="col-md-10 col-sm-11 col-10 info_customers">
                                                     <div class="info_customers_container">
-                                                        <div class="col-12 name_user">Hồng Sơn
-                                                            <span style="color: #009900;">
-                                                                <i class="far fa-shopping-cart" style="color: #009900;">
-                                                                </i>
-                                                                Đã Mua Hàng Từ Gamikey</span>
+                                                        <div class="col-12 name_user">
+                                                            <%=comment.user_id.name%>
+                                                                <span style="color: #009900;">
+                                                                    <i class="far fa-shopping-cart"
+                                                                        style="color: #009900;">
+                                                                    </i>
+                                                                    Đã Mua Hàng Từ Gamikey</span>
                                                         </div>
                                                         <div class="col-12 time_comment">
-                                                            <p>Bình luận vào 2024-03-06 12:05:51</p>
+                                                            <!-- FORMAT TO VIETNAMES TIMEZONE  DD/MM/YY-->
+                                                            <p>Bình luận vào
+                                                                <%=new
+                                                                    Date(comment.createdAt).toLocaleDateString('vi-VN')%>
+                                                            </p>
                                                         </div>
                                                         <div class="col-12 comment_text">
-                                                            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                                            Aspernatur a
-                                                            error
-                                                            voluptatem quas debitis quia temporibus natus possimus fuga
-                                                            veritatis?
-                                                            Voluptas assumenda labore placeat vel molestias perspiciatis
-                                                            quasi
-                                                            facilis
-                                                            nesciunt?
+                                                            <%=comment.comment%>
                                                         </div>
                                                         <div class="col-12 replyComment">
-                                                            <button id="replyCommentUser">Trả Lời</button>
+                                                            <button class="replyCommentUser" id="replyCommentUser"
+                                                                product-id="<%=comment.product_id%>"
+                                                                comment-id="<%=comment.id%>"
+                                                                user-name="<%=comment.user_id.name%>">Trả
+                                                                Lời</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- ****** COMMENT REPLY ***** -->
+                                                    <div id="replyCommentUserContainer">
+                                                        <%=comment.reply_comments%>
+                                                            <% if(comment.replyComments !='' ) { %>
+                                                                <% let replyComments=JSON.stringtify(comment.replyComments) %>
+                                                                    <%= replyComments%>
+                                                                        <div class="comment_customer_reply">
+                                                                            <div
+                                                                                class="comment_from_customers_item col-12 d-flex">
+                                                                                <div
+                                                                                    class="col-md-2 col-sm-1 col-2 img_customers">
+                                                                                    <img class="img_users"
+                                                                                        src="<%=comment.reply_comments.avatar%>"
+                                                                                        alt="">
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-md-10 col-sm-11 col-10 info_customers">
+                                                                                    <div
+                                                                                        class="info_customers_container">
+                                                                                        <div class="col-12 name_user">
+                                                                                            <%=comment.reply_comments.name%>
+                                                                                                <span
+                                                                                                    style="color: #009900;">
+                                                                                                    <i class="far fa-shopping-cart"
+                                                                                                        style="color: #009900;">
+                                                                                                    </i>
+                                                                                                    Đã Mua Hàng Từ
+                                                                                                    Gamikey</span>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="col-12 time_comment">
+                                                                                            <p>Bình luận vào 2024-03-06
+                                                                                                12:05:51
+                                                                                            </p>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="col-12 comment_text">
+                                                                                            Lorem ipsum dolor sit amet
+                                                                                            consectetur, adipisicing
+                                                                                            elit.
+                                                                                            Aspernatur a
+                                                                                            error
+                                                                                            voluptatem quas debitis quia
+                                                                                            temporibus natus
+                                                                                            possimus fuga
+                                                                                            veritatis?
+                                                                                            Voluptas assumenda labore
+                                                                                            placeat
+                                                                                            vel molestias
+                                                                                            perspiciatis
+                                                                                            quasi
+                                                                                            facilis
+                                                                                            nesciunt?
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="col-12 replyComment">
+                                                                                            <button
+                                                                                                id="replyCommentUser">Trả
+                                                                                                Lời</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } %>
+
+                                                    </div>
+                                                    <!-- ****** FORM REPLY ***** -->
+                                                    <div class="form_reply_customers">
+                                                        <div class="col-12 d-flex">
+                                                            <div
+                                                                class="col-2 form_reply_customers_img d-flex justify-content-center">
+                                                                <img src="<%=userInfo.avatar%>" alt="">
+                                                            </div>
+                                                            <div class="col-10 form_reply_customers_input">
+                                                                <form action="/createReplyComment" method="post"
+                                                                    class="formReplyCommentUser">
+                                                                    <input type="hidden" name="product_id"
+                                                                        class="replyProduct_id">
+                                                                    <input type="hidden" name="comment_id"
+                                                                        class="replyComment_id">
+                                                                    <input class="form-control text_reply_input"
+                                                                        type="text" name="comment">
+                                                                    <button id="sendReply">
+                                                                        <i class="fas fa-paper-plane"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="comment_customer_reply">
-                                            <div class="comment_from_customers_item col-12 d-flex">
-                                                <div class="col-md-2 col-sm-1 col-2 img_customers">
-                                                    <img class="img_users"
-                                                        src="./public/images/Play-Games-icon-150x150.png" alt="">
-                                                </div>
-                                                <div class="col-md-10 col-sm-11 col-10 info_customers">
-                                                    <div class="info_customers_container">
-                                                        <div class="col-12 name_user">Hồng Sơn
-                                                            <span style="color: #009900;">
-                                                                <i class="far fa-shopping-cart" style="color: #009900;">
-                                                                </i>
-                                                                Đã Mua Hàng Từ Gamikey</span>
-                                                        </div>
-                                                        <div class="col-12 time_comment">
-                                                            <p>Bình luận vào 2024-03-06 12:05:51</p>
-                                                        </div>
-                                                        <div class="col-12 comment_text">
-                                                            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                                            Aspernatur a
-                                                            error
-                                                            voluptatem quas debitis quia temporibus natus possimus fuga
-                                                            veritatis?
-                                                            Voluptas assumenda labore placeat vel molestias perspiciatis
-                                                            quasi
-                                                            facilis
-                                                            nesciunt?
-                                                        </div>
-                                                        <div class="col-12 replyComment">
-                                                            <button id="replyCommentUser">Trả Lời</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- ****** FORM REPLY ***** -->
-                                        <div class="form_reply_customers">
-                                            <div class="col-12 d-flex">
-                                                <div
-                                                    class="col-2 form_reply_customers_img d-flex justify-content-center">
-                                                    <img src="./public/images/Play-Games-icon-150x150.png" alt="">
-                                                </div>
-                                                <div class="col-10 form_reply_customers_input">
-                                                    <form action="" method="get">
-                                                        <input class="form-control text_reply_input" type="text">
-                                                        <button id="sendReply">
-                                                            <i class="fas fa-paper-plane"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            <% }) %>
                                     </div>
                                 </div>
-                            </div>
-
-                        </div>
                     </div>
                 </section>
 
@@ -460,6 +469,10 @@
 
     <%- include('../../partials/footer'); -%>
         <script>
+            $('#ratingComment').on('click', function () {
+                let rating = $('.js-wc-rating-value').html();
+                $('#rating').val(rating);
+            })
             let success = '<%= success %>';
             if (success) {
                 toastr.success(success);
@@ -469,4 +482,81 @@
             if (errors) {
                 toastr.error(errors);
             }
+            $(document).ready(function () {
+                $('.sendComment').on('click', function (e) {
+                    e.preventDefault();
+                    let rating = $('#rating').val();
+                    let product_id = $('#product_id').val();
+                    let comment = $('textarea[name="comment"]').val();
+                    if (rating == 0) {
+                        toastr.error('Vui lòng chọn số sao đánh giá');
+                        return false;
+                    }
+                    if (comment == '') {
+                        toastr.error('Vui lòng nhập nội dung đánh giá');
+                        return false;
+                    }
+                    $.ajax({
+                        url: '/createComment',
+                        type: 'POST',
+                        data: {
+                            rating: rating,
+                            product_id: product_id,
+                            comment: comment
+                        },
+                        success: function (res) {
+                            if (res.status == 'success') {
+                                toastr.success(res.message);
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                toastr.error(res.message);
+                            }
+                        }
+                    })
+                })
+
+                $('.replyCommentUser').on('click', function () {
+                    let product_id = $(this).attr('product-id');
+                    let comment_id = $(this).attr('comment-id');
+                    let user_name = $(this).attr('user-name');
+                    $('.form_reply_customers').css('display', 'none');
+                    $(this).parents('.info_customers').find('.form_reply_customers').css('display', 'block');
+                    let comment = $(this).parents('.info_customers').find('.text_reply_input').val(`@${user_name} `);
+
+                    $('.replyProduct_id').val(product_id);
+                    $('.replyComment_id').val(comment_id);
+
+                    $('.formReplyCommentUser').on('submit', function (e) {
+                        e.preventDefault();
+                        let product_id = $('.replyProduct_id').val();
+                        let comment_id = $('.replyComment_id').val();
+                        let comment = $(this).find('.text_reply_input').val();
+                        if (comment == '') {
+                            toastr.error('Vui lòng nhập nội dung trả lời');
+                            return false;
+                        }
+                        $.ajax({
+                            url: '/createReplyComment',
+                            type: 'POST',
+                            data: {
+                                product_id: product_id,
+                                comment_id: comment_id,
+                                comment: comment
+                            },
+                            success: function (res) {
+                                if (res.status == 'success') {
+                                    toastr.success(res.message);
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1000);
+                                } else {
+                                    toastr.error(res.message);
+                                }
+                            }
+                        })
+                    })
+                })
+            })
         </script>

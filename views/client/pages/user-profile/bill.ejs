@@ -1,0 +1,97 @@
+<%- include('../../partials/header'); -%>
+
+    <!-- ************************* Main ************************* -->
+    <main>
+        <div class="container profile_user my-5">
+            <div class="user-items">
+                <div class="user-left">
+                    <div class="user_left__items">
+                        <div class="user_left__item ">
+                            <a href="/userProfile">
+                                <div>
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <p>Tài khoản</p>
+                            </a>
+                        </div>
+                        <div class="user_left__item active">
+                            <a href="/billUserProfile">
+                                <div>
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <p>Lịch sử đơn hàng</p>
+                            </a>
+                        </div>
+
+                        <div class="user_left__item">
+                            <a href="/passwordProfile">
+                                <div>
+                                    <i class="fas fa-user-lock"></i>
+                                </div>
+                                <p>Mật khẩu và bảo mật</p>
+                            </a>
+                        </div>
+                        <div class="user_left__item">
+                            <a href="#">
+                                <div>
+                                    <i class="fas fa-comment"></i>
+                                </div>
+                                <p>Bình luận của tôi</p>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="user-right">
+                    <div class="user-right__items">
+                        <h1>Lịch sử đơn hàng</h1>
+                        <p>
+                            Hiển thị thông tin các sản phẩm bạn đã mua tại
+                            Divine Shop
+                        </p>
+                        <div class="lineX"></div>
+                        <div class="oders-search-items">
+
+                            <div class="oders-table-item">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Thời gian</th>
+                                            <th>Mã đơn hàng</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Trạng thái</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% orders.forEach(order=> {%>
+                                            <tr id="order1">
+                                                <!-- FORMAT TO VIETNAMESE TIMEZONE -->
+                                                <td>
+                                                    <%=order.createdAt.toLocaleString('vi-VN',
+                                                        {timeZone: 'Asia/Ho_Chi_Minh' })%>
+                                                </td>
+                                                <td>
+                                                    <%=order.invoice_id%>
+                                                </td>
+                                                <td><%=order.sub_total.toLocaleString('vi-VN', {style : 'currency' ,
+                                                        currency : 'VND' })%></td>
+                                                <td>
+                                                    <%=order.discount_amount%>
+                                                </td>
+                                                <td><%=order.total_amount.toLocaleString('vi-VN', {style : 'currency' ,
+                                                        currency : 'VND' })%></td>
+                                                <td>Đã xử lý</td>
+                                            </tr>
+                                            <%})%>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../../partials/footer'); -%>

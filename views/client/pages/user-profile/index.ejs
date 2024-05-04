@@ -15,7 +15,7 @@
                             </a>
                         </div>
                         <div class="user_left__item">
-                            <a href="../orders.html">
+                            <a href="/billUserProfile">
                                 <div>
                                     <i class="fas fa-shopping-cart"></i>
                                 </div>
@@ -23,15 +23,7 @@
                             </a>
                         </div>
                         <div class="user_left__item">
-                            <a href="../transactions.html">
-                                <div>
-                                    <i class="fas fa-credit-card"></i>
-                                </div>
-                                <p>Lịch sử giao dịch</p>
-                            </a>
-                        </div>
-                        <div class="user_left__item">
-                            <a href="../security.html">
+                            <a href="/passwordProfile">
                                 <div>
                                     <i class="fas fa-user-lock"></i>
                                 </div>
@@ -76,13 +68,11 @@
                         </div>
                         <div class="user-right-avatar">
                             <div class="user-right-avatar-items">
-                                <img loading="lazy"
-                                    src="https://cdn.divineshop.vn/image/catalog/icon/avatar-khach-hang-2-52544.png?hash=1649933269"
-                                    alt="Ảnh đại diện" />
+                                <img loading="lazy" src="<%=user.avatar%>" alt="Ảnh đại diện" />
                                 <div class="user-right-avatar-item">
-                                    <form action="">
+                                    <form action="/userProfile/updateImage?_method=PATCH" method="post"
+                                        id="changeImage">
                                         <input type="file" name="image" id="image" />
-                                        <button>Sửa ảnh đại diện</button>
                                     </form>
                                     <div class="lineY"></div>
                                     <div>
@@ -98,54 +88,24 @@
                         </div>
                     </div>
                     <div class="changed-profile-user">
-                        <form>
+                        <form action="/userProfile/updateUser?_method=PATCH" method="post">
                             <h3>Cá Nhân</h3>
                             <div class="input-container">
-                                <input type="text" id="userName" class="text-input" placeholder="Họ và tên" required />
+                                <input type="text" id="userName" name="name" class="text-input" placeholder="Họ và tên"
+                                    value="<%= user.name %>" />
                                 <label for="userName" class="label">Họ và Tên</label>
                             </div>
+
                             <div class="input-container">
-                                <input type="tel" id="userPhone" class="text-input" placeholder="Số điện thoại"
-                                    required />
+                                <input type="tel" id="userPhone" name="email" class="text-input"
+                                    placeholder="Số điện thoại" value="<%= user.email %>" />
+                                <label for="userPhone" class="label">Email</label>
+                            </div>
+                            <div class="input-container">
+                                <input type="tel" id="userPhone" name="phone" class="text-input"
+                                    placeholder="Số điện thoại" value="<%= user.phone %>" />
                                 <label for="userPhone" class="label">Số điện thoại</label>
                             </div>
-                            <div class="input-container">
-                                <input type="text" id="useridentity" class="text-input"
-                                    placeholder="Chứng minh nhân dân" required />
-                                <label for="useridentity" class="label">Chứng minh nhân dân</label>
-                            </div>
-                            <div class="input-container">
-                                <input type="text" id="userSex" class="text-input" placeholder="Giới tính" required />
-                                <!-- <select name="" id="">
-                                        <option value="0">-</option>
-                                        <option value="1">Nam</option>
-                                        <option value="2">Nữ</option>
-                                    </select> -->
-                                <label for="userSex" class="label">Giới tính</label>
-                            </div>
-                            <div class="input-container">
-                                <input type="text" id="userCity" class="text-input" placeholder="Tỉnh / Thành Phố"
-                                    required />
-                                <label for="userCity" class="label">Tỉnh / Thành Phố</label>
-                            </div>
-                            <div class="input-container">
-                                <input type="text" id="userDistrict" class="text-input" placeholder="Quận / Huyện"
-                                    required />
-                                <label for="userDistrict" class="label">Quận / Huyện</label>
-                            </div>
-                            <div class="input-container">
-                                <input type="text" id="userAddress" class="text-input" placeholder="Số nhà / Đường"
-                                    required />
-                                <label for="userAddress" class="label">Số nhà / Đường</label>
-                            </div>
-                            <label class="accepctLabel">
-                                <input class="accepctInput" type="checkbox" name="public" value="1" checked="" />
-                                <div>
-                                    Cho phép hiển thị tên của bạn trên các hoạt
-                                    động
-                                </div>
-                            </label>
-
                             <button id="changedUserProdile" class="btnUser">
                                 Lưu thay đổi
                             </button>
@@ -161,4 +121,27 @@
             if (success) {
                 toastr.success(success);
             }
+            $(document).ready(function () {
+                $('#image').change(function () {
+                    const url = '/userProfile/updateImage?_method=PATCH';
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: new FormData($('#changeImage')[0]),
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                toastr.success(data.success);
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                toastr.error(data.error);
+                            }
+                        }
+                    })
+
+                })
+            })
         </script>

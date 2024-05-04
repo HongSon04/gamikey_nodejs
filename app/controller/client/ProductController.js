@@ -8,6 +8,8 @@ const {
   getProductBySlug,
   getNearProductByCategory,
 } = require('../../services/product.services');
+const ProductComment = require('../../model/product_comment.model');
+const ProductReplyComment = require('../../model/product_reply_comment.model');
 
 class ProductController {
   // ? Constructor checkuser login và giải mã token
@@ -26,6 +28,16 @@ class ProductController {
     // ? Get ALL Brand
     const getBrands = await getAllBrands();
     const userInfo = req.headers.authorization;
+    
+    // ? Lấy tất cả comment của sản phẩm và tất cả reply comment của comment đó
+    const comments = await ProductComment.find({ product_id: product._id })
+      .populate('user_id', 'name avatar createdAt')
+      .populate({
+        path: 'reply_comments',
+        select: 'comment user_id createdAt',
+        populate: { path: 'user_id', select: 'name avatar' },
+      });
+
     res.render('client/pages/product_detail/index.ejs', {
       product,
       nextProducts,
@@ -34,6 +46,7 @@ class ProductController {
       getBrands,
       slug,
       userInfo,
+      comments,
       success: req.flash('success'),
       errors: req.flash('errors'),
     });

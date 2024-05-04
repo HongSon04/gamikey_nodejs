@@ -1,0 +1,9 @@
+{
+  "_id": "new ObjectId('6636695a8b0b3d3e59569480')",
+  "user_id": {
+    "_id": "new ObjectId('6632146a60e97283f0f717c8')",
+    "avatar": "https://res.cloudinary.com/dlpvcsewd/image/upload/v1714821792/jkx4rtdfiqswftfqpqn3.webp",
+    "name": "Võ Hồng Sơn"
+  },
+  "comment": "@Võ Hồng Sơn ABC hài lòng"
+}

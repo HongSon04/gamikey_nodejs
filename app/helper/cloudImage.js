@@ -29,6 +29,7 @@ const streamUpload = (req) => {
 const uploadCloud = async (req, res, next) => {
   try {
     const result = await upload(req);
+    console.log(result);
     req.body.image = result.secure_url;
     next();
   } catch (error) {

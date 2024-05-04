@@ -40,6 +40,11 @@ class UserServices {
     await user.save();
     return user;
   }
+
+  async delete(id) {
+    await User.findByIdAndDelete(id);
+    return true;
+  }
 }
 
 module.exports = new UserServices();

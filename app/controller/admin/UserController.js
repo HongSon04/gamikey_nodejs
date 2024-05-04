@@ -7,7 +7,7 @@ class UserController {
     const users = await UserServices.getAll();
     res.render('admin/pages/user/index', {
       users,
-      pageTitle: 'Danh Sách Đơn Hàng',
+      pageTitle: 'Danh Sách Khách Hàng',
       route: 'user',
       username,
       success: req.flash('success'),
@@ -96,6 +96,17 @@ class UserController {
       req.flash('errors', 'Mật khẩu không trùng khớp');
       return res.redirect('/admin/user');
     }
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+    const user = await UserServices.delete(id);
+    if (user) {
+      req.flash('success', 'Xóa người dùng thành công');
+      return res.redirect('/admin/user');
+    }
+    req.flash('errors', 'Xóa người dùng thất bại');
+    return res.redirect('/admin/user');
   }
 }
 
