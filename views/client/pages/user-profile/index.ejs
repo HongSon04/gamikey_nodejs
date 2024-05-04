@@ -1,0 +1,164 @@
+<%- include('../../partials/header'); -%>
+
+    <!-- ************************* Main ************************* -->
+    <main>
+        <div class="container profile_user my-5">
+            <div class="user-items">
+                <div class="user-left">
+                    <div class="user_left__items">
+                        <div class="user_left__item active">
+                            <a href="/userProfile">
+                                <div>
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <p>Tài khoản</p>
+                            </a>
+                        </div>
+                        <div class="user_left__item">
+                            <a href="../orders.html">
+                                <div>
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <p>Lịch sử đơn hàng</p>
+                            </a>
+                        </div>
+                        <div class="user_left__item">
+                            <a href="../transactions.html">
+                                <div>
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <p>Lịch sử giao dịch</p>
+                            </a>
+                        </div>
+                        <div class="user_left__item">
+                            <a href="../security.html">
+                                <div>
+                                    <i class="fas fa-user-lock"></i>
+                                </div>
+                                <p>Mật khẩu và bảo mật</p>
+                            </a>
+                        </div>
+                        <div class="user_left__item">
+                            <a href="#">
+                                <div>
+                                    <i class="fas fa-comment"></i>
+                                </div>
+                                <p>Bình luận của tôi</p>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="user-right">
+                    <div class="user-right__items">
+                        <h1>Tổng quan</h1>
+                        <div class="user-right-infoProfile">
+                            <div class="user-right-infoProfile-item">
+                                <h4>Email</h4>
+                                <p id="gmail_user">
+                                    <%= user.email %>
+                                </p>
+                            </div>
+                            <div class="user-right-infoProfile-item">
+                                <h4>Họ và tên</h4>
+                                <p id="name_user">
+                                    <%= user.name %>
+                                </p>
+                            </div>
+
+                            <div class="user-right-infoProfile-item">
+                                <h4>Ngày tham gia</h4>
+                                <!-- FORMAT VIETNAMESE TIMEZONE -->
+                                <p id="datejoin_user">
+                                    <%= user.createdAt.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }) %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="user-right-avatar">
+                            <div class="user-right-avatar-items">
+                                <img loading="lazy"
+                                    src="https://cdn.divineshop.vn/image/catalog/icon/avatar-khach-hang-2-52544.png?hash=1649933269"
+                                    alt="Ảnh đại diện" />
+                                <div class="user-right-avatar-item">
+                                    <form action="">
+                                        <input type="file" name="image" id="image" />
+                                        <button>Sửa ảnh đại diện</button>
+                                    </form>
+                                    <div class="lineY"></div>
+                                    <div>
+                                        <p>
+                                            Vui lòng chọn ảnh nhỏ hơn 5MB <br />
+                                            <br />
+                                            Chọn hình ảnh phù hợp, không phản
+                                            cảm
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="changed-profile-user">
+                        <form>
+                            <h3>Cá Nhân</h3>
+                            <div class="input-container">
+                                <input type="text" id="userName" class="text-input" placeholder="Họ và tên" required />
+                                <label for="userName" class="label">Họ và Tên</label>
+                            </div>
+                            <div class="input-container">
+                                <input type="tel" id="userPhone" class="text-input" placeholder="Số điện thoại"
+                                    required />
+                                <label for="userPhone" class="label">Số điện thoại</label>
+                            </div>
+                            <div class="input-container">
+                                <input type="text" id="useridentity" class="text-input"
+                                    placeholder="Chứng minh nhân dân" required />
+                                <label for="useridentity" class="label">Chứng minh nhân dân</label>
+                            </div>
+                            <div class="input-container">
+                                <input type="text" id="userSex" class="text-input" placeholder="Giới tính" required />
+                                <!-- <select name="" id="">
+                                        <option value="0">-</option>
+                                        <option value="1">Nam</option>
+                                        <option value="2">Nữ</option>
+                                    </select> -->
+                                <label for="userSex" class="label">Giới tính</label>
+                            </div>
+                            <div class="input-container">
+                                <input type="text" id="userCity" class="text-input" placeholder="Tỉnh / Thành Phố"
+                                    required />
+                                <label for="userCity" class="label">Tỉnh / Thành Phố</label>
+                            </div>
+                            <div class="input-container">
+                                <input type="text" id="userDistrict" class="text-input" placeholder="Quận / Huyện"
+                                    required />
+                                <label for="userDistrict" class="label">Quận / Huyện</label>
+                            </div>
+                            <div class="input-container">
+                                <input type="text" id="userAddress" class="text-input" placeholder="Số nhà / Đường"
+                                    required />
+                                <label for="userAddress" class="label">Số nhà / Đường</label>
+                            </div>
+                            <label class="accepctLabel">
+                                <input class="accepctInput" type="checkbox" name="public" value="1" checked="" />
+                                <div>
+                                    Cho phép hiển thị tên của bạn trên các hoạt
+                                    động
+                                </div>
+                            </label>
+
+                            <button id="changedUserProdile" class="btnUser">
+                                Lưu thay đổi
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../../partials/footer'); -%>
+        <script>
+            let success = '<%= success %>';
+            if (success) {
+                toastr.success(success);
+            }
+        </script>

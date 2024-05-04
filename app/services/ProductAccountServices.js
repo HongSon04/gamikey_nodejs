@@ -13,6 +13,10 @@ class ProductAccountServices {
     return (await ProductAccount.findOne({ _id: id })) || '';
   }
 
+  async getProductAccountByEmail(email) {
+    return await ProductAccount.find({ used_by_email: email });
+  }
+
   async store(data) {
     if (data.type_account == 'account') {
       // ? Create Many Account and call Product And increase quantity by 1

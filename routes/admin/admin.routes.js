@@ -8,6 +8,8 @@ const brandRouter = require('./brand.route');
 const productRouter = require('./product.routes');
 const ProductAccountRouter = require('./product_account.routes');
 const CouponRouter = require('./coupon.routes');
+const OrderRouter = require('./order.routes');
+const UserRouter = require('./user.routes');
 
 adminRouter.use('/category', categoryRouter);
 adminRouter.use('/sub-category', subCategoryRouter);
@@ -16,5 +18,7 @@ adminRouter.use('/brand', brandRouter);
 adminRouter.use('/product', productRouter);
 adminRouter.use('/product-account', ProductAccountRouter);
 adminRouter.use('/coupon', CouponRouter);
+adminRouter.use('/order', OrderRouter);
+adminRouter.use('/user', UserRouter);
 
 module.exports = adminRouter;

@@ -27,7 +27,14 @@ app.use(cookieParser('keyboard cat'));
 app.use(
   session({
     secret: 'keyboard cat',
-    cookie: { maxAge: 43200000 },
+    // ?
+    cookie: {
+      maxAge: process.env.COOKIE_EXPIRES,
+      secure: false,
+      httpOnly: true,
+      resave: true,
+      saveUninitialized: true,
+    },
   }),
 );
 app.use(flash());
