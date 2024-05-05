@@ -27,7 +27,7 @@ class ProductController {
     const getCategories = await getAllCategories();
     // ? Get ALL Brand
     const getBrands = await getAllBrands();
-    const userInfo = req.headers.authorization;
+    const userInfo = req.headers.authorization ?? '';
     
     // ? Lấy tất cả comment của sản phẩm và tất cả reply comment của comment đó
     const comments = await ProductComment.find({ product_id: product._id })

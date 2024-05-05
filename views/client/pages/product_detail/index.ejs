@@ -309,78 +309,64 @@
                                                             <%=comment.comment%>
                                                         </div>
                                                         <div class="col-12 replyComment">
-                                                            <button class="replyCommentUser" id="replyCommentUser"
-                                                                product-id="<%=comment.product_id%>"
-                                                                comment-id="<%=comment.id%>"
-                                                                user-name="<%=comment.user_id.name%>">Trả
-                                                                Lời</button>
+                                                            <% if(userInfo !='' ) { %>
+                                                                <button class="replyCommentUser" id="replyCommentUser"
+                                                                    product-id="<%=comment.product_id%>"
+                                                                    comment-id="<%=comment.id%>"
+                                                                    user-name="<%=comment.user_id.name%>">Trả
+                                                                    Lời</button>
+                                                                <% } %>
                                                         </div>
                                                     </div>
                                                     <!-- ****** COMMENT REPLY ***** -->
                                                     <div id="replyCommentUserContainer">
-                                                        <%=comment.reply_comments%>
-                                                            <% if(comment.replyComments !='' ) { %>
-                                                                <% let replyComments=JSON.stringtify(comment.replyComments) %>
-                                                                    <%= replyComments%>
-                                                                        <div class="comment_customer_reply">
-                                                                            <div
-                                                                                class="comment_from_customers_item col-12 d-flex">
-                                                                                <div
-                                                                                    class="col-md-2 col-sm-1 col-2 img_customers">
-                                                                                    <img class="img_users"
-                                                                                        src="<%=comment.reply_comments.avatar%>"
-                                                                                        alt="">
+                                                        <% if(comment.reply_comments !='' ) { %>
+                                                            <% comment.reply_comments.forEach(replyComment=> { %>
+                                                                <div class="comment_customer_reply">
+                                                                    <div
+                                                                        class="comment_from_customers_item col-12 d-flex">
+                                                                        <div
+                                                                            class="col-md-2 col-sm-1 col-2 img_customers">
+                                                                            <img class="img_users"
+                                                                                src="<%=replyComment.user_id.avatar%>"
+                                                                                alt="">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-md-10 col-sm-11 col-10 info_customers">
+                                                                            <div class="info_customers_container">
+                                                                                <div class="col-12 name_user">
+                                                                                    <%=replyComment.user_id.name%>
+                                                                                        <span style="color: #009900;">
+                                                                                            <i class="far fa-shopping-cart"
+                                                                                                style="color: #009900;">
+                                                                                            </i>
+                                                                                            Đã Mua Hàng Từ
+                                                                                            Gamikey</span>
                                                                                 </div>
-                                                                                <div
-                                                                                    class="col-md-10 col-sm-11 col-10 info_customers">
-                                                                                    <div
-                                                                                        class="info_customers_container">
-                                                                                        <div class="col-12 name_user">
-                                                                                            <%=comment.reply_comments.name%>
-                                                                                                <span
-                                                                                                    style="color: #009900;">
-                                                                                                    <i class="far fa-shopping-cart"
-                                                                                                        style="color: #009900;">
-                                                                                                    </i>
-                                                                                                    Đã Mua Hàng Từ
-                                                                                                    Gamikey</span>
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-12 time_comment">
-                                                                                            <p>Bình luận vào 2024-03-06
-                                                                                                12:05:51
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-12 comment_text">
-                                                                                            Lorem ipsum dolor sit amet
-                                                                                            consectetur, adipisicing
-                                                                                            elit.
-                                                                                            Aspernatur a
-                                                                                            error
-                                                                                            voluptatem quas debitis quia
-                                                                                            temporibus natus
-                                                                                            possimus fuga
-                                                                                            veritatis?
-                                                                                            Voluptas assumenda labore
-                                                                                            placeat
-                                                                                            vel molestias
-                                                                                            perspiciatis
-                                                                                            quasi
-                                                                                            facilis
-                                                                                            nesciunt?
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-12 replyComment">
-                                                                                            <button
-                                                                                                id="replyCommentUser">Trả
-                                                                                                Lời</button>
-                                                                                        </div>
+                                                                                <div class="col-12 time_comment">
+                                                                                    <p>Bình luận vào <%=new
+                                                                                            Date(replyComment.createdAt).toLocaleDateString('vi-VN')%>
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="col-12 comment_text">
+                                                                                    <%=replyComment.comment%>
+                                                                                </div>
+                                                                                <% if(userInfo !='' ) { %>
+                                                                                    <div class="col-12 replyComment">
+                                                                                        <button class="replyCommentUser"
+                                                                                            id="replyCommentUser"
+                                                                                            product-id="<%=comment.product_id%>"
+                                                                                            comment-id="<%=comment.id%>"
+                                                                                            user-name="<%=replyComment.user_id.name%>">Trả
+                                                                                            Lời</button>
                                                                                     </div>
-                                                                                </div>
+                                                                                    <% } %>
                                                                             </div>
                                                                         </div>
-                                                                        <% } %>
+                                                                    </div>
+                                                                </div>
+                                                                <% }) %>
+                                                                    <% } %>
 
                                                     </div>
                                                     <!-- ****** FORM REPLY ***** -->

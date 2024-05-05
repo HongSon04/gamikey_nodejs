@@ -1,0 +1,121 @@
+<%- include('../../partials/header.ejs') %>
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-0">
+      <span class="text-muted fw-light">Ecommerce /</span><span class="fw-medium"> Bình Luận</span>
+    </h4>
+
+    <div class="app-ecommerce">
+      <!-- Add Product -->
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
+        <div class="d-flex flex-column justify-content-center">
+          <h4 class="mb-1 mt-3">Bình Luận</h4>
+        </div>
+        <div class="d-flex align-content-center flex-wrap gap-3">
+        </div>
+      </div>
+      <% let listErrors=[] %>
+        <% listErrors=errors.map(error=> error.msg) %>
+          <div class="row">
+            <!-- Ajax Sourced Server-side -->
+            <div class="card">
+              <h5 class="card-header">Bảng Bình Luận</h5>
+              <div class="card-datatable text-nowrap">
+                <table class="datatables-ajax table">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên Sản Phẩm</th>
+                      <th>Tên Khách Hàng</th>
+                      <th>Bình Luận</th>
+                      <th>Đánh Giá</th>
+                      <th>Hành Động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% let index=1 %>
+                      <% if(comments.length> 0) { %> <% comments.forEach((comment)=> { %>
+                          <tr>
+                            <td>
+                              <%= index ++ %>
+                            </td>
+                            <td>
+                              <%= comment.product_id.name %>
+                            </td>
+                            <td>
+                              <%= comment.user_id.name %>
+                            </td>
+                            <td>
+                              <%= comment.comment %>
+                            </td>
+                            <td>
+                              <%= comment.rating %>
+                            </td>
+                            <td class="d-flex">
+
+                              <form action="/admin/comment/delete/<%= comment.id%>?_method=DELETE" method="post"
+                                class="delete-item-form mx-3">
+                                <button class="btn btn-danger waves-effect waves-light delete-item"><i
+                                    class="fa-solid fa-trash-can"></i></button>
+                              </form>
+                            </td>
+                          </tr>
+                          <% comment.reply_comments.forEach(reply_comment=> {%>
+                            <tr>
+                              <td>
+                                <%= index ++ %>
+                              </td>
+                              <td>
+                                <%= reply_comment.product_id.name %>
+                              </td>
+                              <td>
+                                <%= reply_comment.user_id.name %>
+                              </td>
+                              <td>
+                                <%= reply_comment.comment %>
+                              </td>
+                              <td>
+                                <%= reply_comment.rating %>
+                              </td>
+                              <td class="d-flex">
+
+                                <form action="/admin/comment/delete/<%= comment.id%>?_method=DELETE" method="post"
+                                  class="delete-item-form mx-3">
+                                  <button class="btn btn-danger waves-effect waves-light delete-item"><i
+                                      class="fa-solid fa-trash-can"></i></button>
+                                </form>
+                              </td>
+                            </tr>
+                            <% })%>
+                              <% })%>
+                                <% } else { %>
+                                  <tr>
+                                    <td colspan="20" class="text-center">Không có dữ liệu</td>
+                                  </tr>
+                                  <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--/ Ajax Sourced Server-side -->
+          </div>
+    </div>
+  </div>
+  <!-- / Content -->
+  <!-- DATATABLES SETTING -->
+  <script>
+    $(document).ready(function () {
+      // ? Toaster Notification
+      let success = '<%= success %>';
+      if (success != '') {
+        toastr.success(success, 'Thành Công');
+      }
+      let table = $('.datatables-ajax').DataTable({
+        processing: true,
+        responsive: true,
+      });
+      // ? Change Status
+    });
+  </script>
+  <%- include('../../partials/footer.ejs') %>

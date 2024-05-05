@@ -122,5 +122,22 @@
                 </li>
             </ul>
         </li>
+        <!-- Bình Luận -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text" data-i18n="Quản Lý Danh Mục">Quản Lý Bình Luận</span>
+        </li>
+        <li class="menu-item <%= route === 'comment' ? 'active open' : '' %>">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                <div data-i18n="Quản Lý Bình Luận">Quản Lý Bình Luận</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item <%= route === 'comment' ? 'active' : '' %>">
+                    <a href=" /admin/comment" class="menu-link">
+                        <div data-i18n="Bình Luận">Bình Luận</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </aside>

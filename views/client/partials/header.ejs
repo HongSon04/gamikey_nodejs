@@ -113,7 +113,7 @@
                     <div class="col-12 header-nav-actions_items d-flex align-items-center">
                         <div class="col-6 header_btn_actions mx-2">
                             <!-- HEADER USER LOGIN -->
-                            <% if(userInfo !=null) {%>
+                            <% if(userInfo !=null && userInfo !='' ) {%>
                                 <div class="header_btn_actions_items">
                                     <div class="header_action_king">
                                         <button
@@ -129,7 +129,7 @@
                                                             userInfo.email%>
                                                     </li>
                                                     <li><a href="/userProfile">Tài Khoản</a></li>
-                                                    <li><a href="">Đơn Hàng</a></li>
+                                                    <li><a href="/billUserProfile">Đơn Hàng</a></li>
                                                     <form method="get" action="/logout" id="logoutForm">
                                                         <li><a href="/logout" id="logoutBTN">Đăng Xuất</a></li>
                                                     </form>
